@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.OfficeMapper">
+    <resultMap id="offMap" type="OfficeModel">
+        <id column="id" property="id"/>
+        <result property="office_name" column="office_name"/>
+        <result property="office_desc" column="office_desc"/>
+        <result property="creater" column="creater"/>
+        <result property="create_time" column="create_time"/>
+        <result property="updater" column="updater"/>
+        <result property="update_time" column="update_time"/>
+    </resultMap>
+    <select id="selectById" resultMap="offMap" parameterType="java.lang.Integer">
+        SELECT * FROM hosp_office WHERE id = #{office_id}
+    </select>
+</mapper>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.RegistrationMapper">
+    <resultMap id="regAll" type="RegistinfoModel">
+        <id column="id" property="id"/>
+        <result column="regist_num" property="regist_num"/>
+        <result column="regist_name" property="regist_name"/>
+        <result column="regist_papers_type" property="regist_papers_type"/>
+        <result column="regist_papers_num" property="regist_papers_num"/>
+        <result column="regist_social_num" property="regist_social_num"/>
+        <result column="phone" property="phone"/>
+        <result column="self_paying" property="self_paying"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="job" property="job"/>
+        <result column="early_appointment" property="early_appointment"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="creater" property="creater"/>
+        <result column="create_time" property="create_time"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="update_time"/>
+        <association property="officeModel" column="office_id" javaType="OfficeModel" select="com.zhiyou.mapper.OfficeMapper.selectById" />
+        <association property="doctorModel" column="doctor_id" javaType="DoctorModel" select="com.zhiyou.mapper.DoctorMapper.selectDocByParam" />
+    </resultMap>
+    <!--分页模糊查询-->
+    <select id="selectRegAll" resultMap="regAll" parameterType="java.util.HashMap">
+        SELECT * FROM
+        hosp_registinfo as reg,
+        hosp_doctor as doc,
+        hosp_office as off
+        <where>
+            reg.office_id = off.id
+            AND
+            reg.doctor_id = doc.id
+            <if test="regNum!=''and regNum!=null">
+                AND  reg.regist_num = #{regNum}
+            </if>
+            <if test="docName!=null and docName!=''">
+                AND doc.doctor_name = #{docName}
+            </if>
+            <if test="officeName!=null and officeName!=''">
+                AND off.office_name = #{officeName}
+            </if>
+        </where>
+    </select>
+
+    <!--根据病历编号查询该病人的信息-->
+    <select id="selectRegByParam" parameterType="java.lang.String" resultMap="regAll">
+        SELECT * from hosp_registinfo
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </select>
+
+    <!--退号-->
+    <update id="updateRegByParam" parameterType="String">
+        UPDATE hosp_registinfo
+        <set>
+            status = 0
+        </set>
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </update>
+
+    <!--门诊挂号-->
+    <insert id="saveRegByParam" parameterType="RegistinfoModel">
+        insert into  hosp_registinfo(regist_num,regist_name,regist_papers_type,regist_papers_num,regist_social_num,phone,fee_money,sex,age,job,early_appointment,status,remark,creater,create_time,office_id,doctor_id)
+         values (#{regist_num},#{regist_name},#{regist_papers_type},#{regist_papers_num},#{regist_social_num},#{phone},#{fee_money},#{sex},#{age},#{job},#{early_appointment},1,#{remark},#{creater},#{create_time},#{officeModel.id},#{doctorModel.id});
+    </insert>
+
+    <!--修改挂号信息-->
+    <update id="updateRegByRegNum" parameterType="RegistinfoModel">
+        UPDATE hosp_registinfo
+        <set>
+            <if test="regist_papers_type!=null">
+                regist_papers_type = #{regist_papers_type},
+            </if>
+            <if test="regist_papers_num!=null and regist_papers_num!=''">
+                regist_papers_num = #{regist_papers_num},
+            </if>
+            <if test="regist_social_num!=null and regist_social_num!=''">
+                regist_social_num = #{regist_social_num},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone = #{phone},
+            </if>
+            <if test="sex!= null">
+                sex = #{sex,jdbcType=INTEGER},
+            </if>
+            <if test="job!=null and job!= null ">
+                job = #{job},
+            </if>
+            <if test="early_appointment!= null">
+                early_appointment = #{early_appointment,jdbcType=INTEGER},
+            </if>
+            <if test="officeModel.id!=null">
+                office_id =#{officeModel.id},
+            </if>
+            <if test="doctorModel.id!=null">
+                doctor_id =#{doctorModel.id},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark =#{remark},
+            </if>
+            <if test="updater!=null">
+                updater =#{updater},
+            </if>
+            <if test="update_time!=null">
+                update_time =#{update_time}
+            </if>
+        </set>
+        <where>
+            <if test="regist_num!=null and regist_num!=''">
+                regist_num =#{regist_num}
+            </if>
+        </where>
+    </update>
+</mapper>

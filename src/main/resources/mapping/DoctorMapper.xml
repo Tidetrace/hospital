@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.DoctorMapper">
+    <resultMap id="docMap" type="DoctorModel">
+        <id column="id" property="id"></id>
+        <result column="doctor_num" property="doctor_num"/>
+        <result column="doctor_name" property="doctor_name"/>
+        <result column="pass_time" property="pass_time"/>
+        <result column="doctor_papers_type" property="doctor_papers_type"/>
+        <result column="doctor_papers_num" property="doctor_papers_num"/>
+        <result column="mobile" property="mobile"/>
+        <result column="special_plane" property="special_plane"/>
+        <result column="sex" property="sex"/>
+        <result column="birthday" property="birthday"/>
+        <result column="email" property="email"/>
+        <result column="education" property="education"/>
+        <result column="remark" property="remark"/>
+        <result column="creater" property="creater"/>
+        <result column="create_time" property="create_time"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="update_time"/>
+        <association property="officeModel" column="office_id" javaType="OfficeModel" select="com.zhiyou.mapper.OfficeMapper.selectById" />
+    </resultMap>
+
+    <select id="selectByParam" parameterType="java.util.HashMap" resultMap="docMap">
+        SELECT * from hosp_doctor as doc,hosp_office as off
+        <where>
+            doc.office_id=off.id
+            <if test="docNum!=''and docNum!=null">
+                AND doc.doctor_num = #{docNum}
+            </if>
+            <if test="docName!=''and docName!=null">
+                AND  doc.doctor_name = #{docName}
+            </if>
+            <if test="offName!=''and offName!=null">
+                AND  off.office_name = #{offName}
+            </if>
+        </where>
+    </select>
+
+    <!--根据医生编号查询该医生的信息-->
+    <select id="selectDocById" resultMap="docMap" parameterType="java.lang.String">
+        SELECT * from hosp_doctor as doc,hosp_office as off
+        <where>
+            doc.office_id=off.id
+            AND doc.doctor_num = #{param}
+        </where>
+    </select>
+
+    <!--根据id查询医生信息-->
+    <select id="selectDocByParam" resultMap="docMap" resultType="String">
+        select * from hosp_doctor as doc
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                doc.id = #{param}
+            </if>
+        </where>
+    </select>
+    <!--添加医生信息-->
+    <insert id="saveDocAll" parameterType="DoctorModel">
+        INSERT INTO hosp_doctor(doctor_num,doctor_name,doctor_papers_type,doctor_papers_num,mobile,special_plane,sex,birthday,email,office_id,education,remark,creater,create_time)
+        VALUES (#{doctor_num},#{doctor_name},#{doctor_papers_type},#{doctor_papers_num},#{mobile},#{special_plane},#{sex},#{birthday},#{email},#{officeModel.id},#{education},#{remark},#{creater},#{create_time})
+    </insert>
+
+    <!--修改医生信息-->
+    <update id="updateDocParam" parameterType="DoctorModel" >
+        UPDATE hosp_doctor SET
+        <if test="doctor_papers_type!=null">
+            doctor_papers_type =#{doctor_papers_type},
+        </if>
+        <if test="doctor_papers_num!=null and doctor_papers_num!=''">
+            doctor_papers_num=#{doctor_papers_num},
+        </if>
+        <if test="mobile!=null and mobile!=''">
+            mobile=#{mobile},
+        </if>
+        <if test="special_plane!=null and special_plane!=''">
+            special_plane=#{special_plane},
+        </if>
+        <if test="sex!=null">
+            sex=#{sex},
+        </if>
+        <if test="birthday!=null">
+            birthday=#{birthday,jdbcType=TIMESTAMP},
+        </if>
+        <if test="email!=null and email!=''">
+            email=#{email},</if>
+        <if test="officeModel.id!=null">
+            office_id=#{officeModel.id},
+        </if>
+        <if test="education!=null and education!=''">
+            education=#{education},
+        </if>
+        <if test="remark!=null and remark!=''">
+            remark = #{remark},
+        </if>
+        <if test="updater!=null and updater!=''">
+            updater=#{updater,jdbcType=TIMESTAMP},
+        </if>
+        <if test="update_time!=null">
+            update_time=#{update_time}
+        </if>
+        WHERE doctor_num = #{doctor_num}
+    </update>
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.AuthorityMapper">
+
+    <resultMap id="authorityMap" type="AuthorityModel">
+        <id property="id" column="id"/>
+        <result column="authority_name" property="authority_name"/>
+        <result column="authority_url" property="authority_url"/>
+        <result column="state" property="state"/>
+        <result column="creater" property="creater"/>
+        <result column="create_time" property="create_time"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="update_time"/>
+    </resultMap>
+    <!--用户角色权限查询-->
+    <select id="selectByAuthorityIdParam" resultMap="authorityMap" parameterType="java.lang.Integer">
+        select * from hosp_authority
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                id = #{authority_id}
+            </if>
+        </where>
+    </select>
+
+    <!--分页模糊查询 查询权限所有信息-->
+    <select id="selectAuthorityAllByParam" parameterType="String" resultMap="authorityMap">
+        select * from hosp_authority
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                authority_name like CONCAT('%',#{authority_name},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--根据id查询权限信息-->
+    <select id="selectAuthoById" parameterType="Integer" resultMap="authorityMap">
+        select * from hosp_authority
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <!--根据权限id进行修改-->
+    <update id="updateResourceById" parameterType="AuthorityModel">
+        update hosp_authority
+        <trim prefix="set" suffixOverrides="," suffix=" where id = #{id} ">
+
+            <if test="authority_name != null and authority_name.length()>0"> authority_name=#{authority_name} , </if>
+
+            <if test="authority_url != null and authority_url.length()>0"> authority_url=#{authority_url} ,  </if>
+
+            <if test="state != null"> state=#{state} ,  </if>
+
+            <if test="updater != null and updater.length()>0"> updater=#{updater} ,  </if>
+
+            <if test="update_time != null"> update_time=#{update_time} ,  </if>
+
+        </trim>
+    </update>
+
+    <!--添加所有的权限信息-->
+    <insert id="saveResourceById" parameterType="AuthorityModel">
+        insert into hosp_authority (authority_name,authority_url,state,creater,create_time)
+        values (#{authority_name},#{authority_url},#{state},#{creater},#{create_time});
+    </insert>
+
+    <!--根据权限Id进行相应的删除操作-->
+    <delete id="delAuthorityById" parameterType="Integer">
+        delete from hosp_authority
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
+
+    <!--根据id 进行批量删除资源信息-->
+    <delete id="deleteResourceByParams" parameterType="int[]">
+        delete from hosp_authority where id in
+        <foreach collection="array" item="ids" index="no" open="("
+                 separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+</mapper>

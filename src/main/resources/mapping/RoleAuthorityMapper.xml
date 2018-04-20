@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.RoleAuthorityMapper">
+
+    <resultMap id="roleAuthorityMap" type="RoleAuthorityModel">
+        <collection property="authorityModel" ofType="AuthorityModel" select="com.zhiyou.mapper.AuthorityMapper.selectByAuthorityIdParam" column="authority_id"/>
+    </resultMap>
+
+    <select id="selectByRoleAuthorityIdParam" resultMap="roleAuthorityMap" parameterType="java.lang.Integer">
+        select * from hosp_role_authority
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                role_id = #{id}
+            </if>
+        </where>
+    </select>
+</mapper>

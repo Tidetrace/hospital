@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.DispensingMapper">
+    <resultMap id="pillsMap" type="OnlinePillsModel">
+        <id column="id" property="id"/>
+        <result column="pills_send" property="pills_send"/>
+        <result column="pills_num" property="pills_num"/>
+        <association property="registinfoModel" column="regist_num" javaType="RegistinfoModel" select="com.zhiyou.mapper.RegistrationMapper.selectRegByParam" />
+        <association property="drugModel" column="drug_num" javaType="DrugModel" select="com.zhiyou.mapper.MedicineMapper.selectDrugByParam" />
+    </resultMap>
+
+    <select id="selectPillsByParam" resultMap="pillsMap" parameterType="String">
+        select * from online_pills
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectPillsByAllParam" parameterType="java.util.Map" resultMap="pillsMap">
+        select * from online_pills
+        <where>
+            <if test="regNum!=null and regNum!=''">
+                regist_num = #{regNum}
+            </if>
+            <if test="drugNum!=null and drugNum!=''">
+                AND drug_num = #{drugNum}
+            </if>
+        </where>
+    </select>
+    <!-- 发药 未完成的发药进行修改-->
+    <update id="updatePillsByAllParams" parameterType="OnlinePillsModel">
+        UPDATE online_pills
+        <set>
+            <if test="pills_send!=null and pills_send!=''">
+                pills_send =#{pills_send},
+            </if>
+            <if test="updater!=null and updater!=''">
+                updater =#{updater},
+            </if>
+            <if test="update_time!=null">
+                update_time =#{update_time}
+            </if>
+        </set>
+        <where>
+            <if test="registinfoModel.regist_num!=null and registinfoModel.regist_num!=''">
+                regist_num = #{registinfoModel.regist_num}
+            </if>
+            <if test="drugModel.drug_num!=null and drugModel.drug_num!=''">
+                AND drug_num = #{drugModel.drug_num}
+            </if>
+        </where>
+    </update>
+
+    <!--发药 还未进行发药-->
+    <insert id="savePillsByAllParams" parameterType="OnlinePillsModel">
+        insert into online_pills (regist_num,drug_num,pills_send,creater,create_time) values (#{registinfoModel.regist_num},#{drugModel.drug_num},#{pills_send},#{creater},#{create_time});
+    </insert>
+</mapper>

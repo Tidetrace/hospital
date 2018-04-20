@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.HospMessageMapper">
+    <resultMap id="inHospMap" type="InhospitalMessageModel">
+        <id column="id" property="id"/>
+        <result column="nurse" property="nurse"/>
+        <result column="bed_num" property="bed_num"/>
+        <result column="cash" property="cash"/>
+        <result column="illness" property="illness"/>
+        <result column="creater" property="creater"/>
+        <result column="create_time" property="create_time"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="update_time"/>
+        <result column="remark" property="remark"/>
+        <result column="state" property="state"/>
+        <association property="registinfoModel" column="regist_num" javaType="RegistinfoModel" select="com.zhiyou.mapper.RegistrationMapper.selectRegByParam" />
+        <association property="inhostipalSettleModel" column="regist_num" javaType="InhostipalSettleModel" select="com.zhiyou.mapper.HospSetterMapper.selectOutHospByRegNum" />
+    </resultMap>
+
+    <!--分页模糊查询住院信息-->
+    <select id="selectInhospAll" resultMap="inHospMap" parameterType="String">
+        select * from hosp_inhospital_message
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </select>
+    <!--根据参数查询-->
+    <select id="selectInhospByParam" resultMap="inHospMap" parameterType="String">
+        select * from hosp_inhospital_message
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </select>
+
+    <!--根据病历编号查询住院信息的-->
+    <select id="selectInhospByMessageParams" parameterType="String" resultType="InhospitalMessageModel">
+        select * from hosp_inhospital_message
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </select>
+    <!--添加住院人员信息-->
+    <insert id="saveInHospByParam" parameterType="InhospitalMessageModel">
+        insert into hosp_inhospital_message (regist_num,illness,cash,bed_num,nurse,creater,create_time,remark,state) values (#{registinfoModel.regist_num},#{illness},#{cash},#{bed_num},#{nurse},#{creater},#{create_time},#{remark},1)
+
+  </insert>
+
+    <!--出院-->
+    <update id="updateSetterHospByRegNum" parameterType="String">
+        update hosp_inhospital_message
+        <set>
+            state = 2
+        </set>
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+            AND state = 0
+        </where>
+    </update>
+
+    <!--结算-->
+    <update id="updateSetterCloseHospByRegNum" parameterType="String">
+        update hosp_inhospital_message
+        <set>
+            state = 0
+        </set>
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </update>
+</mapper>

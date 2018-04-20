@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.HospSetterMapper">
+
+    <resultMap id="outHospMap" type="InhostipalSettleModel">
+        <id column="id" property="id"/>
+        <result column="inho_finall_status" property="inho_finall_status"/>
+        <result column="inho_total_case" property="inho_total_case"/>
+        <result column="inho_cash" property="inho_cash"/>
+        <result column="inho_end_time" property="inho_end_time"/>
+        <result column="inho_medical_pay" property="inho_medical_pay"/>
+        <result column="inho_drug_pay" property="inho_drug_pay"/>
+    </resultMap>
+    <select id="selectOutHospByRegNum" resultMap="outHospMap" parameterType="String">
+        select * from hosp_inhostipal_settle
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </select>
+    <update id="updateSetterHospByRegNum" parameterType="String">
+        UPDATE hosp_inhostipal_settle
+        <set>
+            inho_finall_status = 2
+        </set>
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
+    </update>
+
+
+</mapper>

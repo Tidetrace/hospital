@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    <context:component-scan base-package="com.zhiyou.controller"/>
+    <!-- 配置可以返回json数据的功能，同时指定编码，防止出现乱码 -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                    <property name="supportedMediaTypes">
+                        <list>
+                            <value>text/plain;charset=UTF-8</value>
+                            <value>text/html;charset=UTF-8</value>
+                            <value>text/json;charset=UTF-8</value>
+                            <value>application/json;charset=UTF-8</value>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <mvc:annotation-driven/>
+    <!-- 启用默认的视图处理解析器 --><!-- 自定义参数绑定 -->
+    <bean id="formattingConversionServiceFactoryBean"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!-- 转化器 ，其中名字不能改变，必须用jar包自带的名字converters -->
+        <property name="converters">
+            <!--日期类型转化-->
+            <list>
+                <bean class="com.zhiyou.convert.ConvertDate"/>
+            </list>
+        </property>
+    </bean>
+
+    <mvc:resources mapping="/Js/**" location="/Js/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/assets/**" location="/assets/"/>
+    <mvc:resources mapping="/upload/**" location="/upload/"/>
+
+    <!-- 登录拦截器 -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/> <!-- 管理员登录拦截 -->
+            <mvc:exclude-mapping path="user/login.do"/>
+            <bean class="com.zhiyou.Interceptor.CommonInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!--配置视图前后缀-->
+    <bean
+            class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="suffix" value=".jsp"></property>
+    </bean>
+    <!-- 文件上传,id必须设置为multipartResolver -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置文件上传大小,字节为单位的 -->
+        <property name="maxUploadSize" value="5000000"/>
+    </bean>
+
+</beans>

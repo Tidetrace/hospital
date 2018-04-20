@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.MedicineMapper">
+    <resultMap id="drugMap" type="DrugModel">
+        <id column="id" property="id"/>
+        <result column="drug_num" property="drug_num"/>
+        <result column="drug_image_url" property="drug_image_url"/>
+        <result column="purchase_price" property="purchase_price"/>
+        <result column="sell_price" property="sell_price"/>
+        <result column="drug_name" property="drug_name"/>
+        <result column="drug_type" property="drug_type"/>
+        <result column="drug_desc" property="drug_desc"/>
+        <result column="produced_time" property="produced_time"/>
+        <result column="shelf_time" property="shelf_time"/>
+        <result column="detail_desc" property="detail_desc"/>
+        <result column="vendor" property="vendor"/>
+        <result column="taking_instructions" property="taking_instructions"/>
+        <result column="surplus" property="surplus"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+        <result column="creater" property="creater"/>
+        <result column="create_time" property="create_time"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="update_time"/>
+    </resultMap>
+    <!--分页模糊查询药品信息-->
+    <select id="selectDrugAll" resultMap="drugMap" parameterType="Map">
+        select * from hosp_drug
+        <where>
+            <if test="drugName!=null and drugName!=''">
+                drug_name like concat('%',#{drugName},'%')
+            </if>
+            <if test="drugType!=null and drugType!=''">
+                AND drug_type like concat('%',#{drugType},'%')
+            </if>
+        </where>
+    </select>
+
+    <!--根据药品编号查询该药品信息-->
+    <select id="selectDrugByParam" parameterType="String" resultType="DrugModel">
+        select * from hosp_drug
+        <where>
+            <if test="_parameter != null">
+                drug_num =#{drugNum}
+            </if>
+        </where>
+    </select>
+
+    <!--添加药品信息-->
+    <insert id="saveDrugByParam" parameterType="DrugModel">
+        insert into hosp_drug(drug_num,purchase_price,sell_price,drug_name,drug_type,drug_desc,detail_desc,produced_time,shelf_time,vendor,taking_instructions,gross_purchases,surplus,status,remark,creater,create_time)
+        values (#{drug_num},#{purchase_price},#{sell_price},#{drug_name},#{drug_type},#{drug_desc},#{detail_desc},#{produced_time},#{shelf_time},#{vendor},#{taking_instructions},#{gross_purchases},#{surplus},1,#{remark},#{creater},#{create_time})
+    </insert>
+
+    <!--修改药品信息模块-->
+    <update id="updateDrugByDrugNum" parameterType="DrugModel">
+        UPDATE hosp_drug
+        <set>
+            <if test="purchase_price!=null and purchase_price!=''">
+                purchase_price =#{purchase_price},
+            </if>
+            <if test="sell_price!=null and sell_price!=''">
+                sell_price =#{sell_price},
+            </if>
+            <if test="drug_name!=null and drug_name!=''">
+                drug_name =#{drug_name},
+            </if>
+            <if test="drug_type!=null and drug_type!=''">
+                drug_type =#{drug_type},
+            </if>
+            <if test="drug_desc!=null and drug_desc!=''">
+                drug_desc =#{drug_desc},
+            </if>
+            <if test="detail_desc!=null and detail_desc!=''">
+                detail_desc =#{detail_desc},
+            </if>
+            <if test="produced_time!=null">
+                produced_time =#{produced_time},
+            </if>
+            <if test="shelf_time!=null and shelf_time!=''">
+                shelf_time =#{shelf_time},
+            </if>
+            <if test="vendor!=null and vendor!=''">
+                vendor =#{vendor},
+            </if>
+            <if test="taking_instructions!=null and taking_instructions!=''">
+                taking_instructions =#{taking_instructions},
+            </if>
+            <if test="gross_purchases!=null and gross_purchases!=''">
+                gross_purchases =#{gross_purchases},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark =#{remark},
+            </if>
+            <if test="surplus!=null and surplus!=''">
+                surplus =#{surplus},
+            </if>
+            <if test="creater!=null and creater!=''">
+                creater =#{creater},
+            </if>
+            <if test="create_time!=null">
+                create_time =#{create_time}
+            </if>
+        </set>
+        <where>
+            <if test="drug_num!=null and drug_num!=''">
+                drug_num =#{drug_num}
+            </if>
+        </where>
+    </update>
+</mapper>
