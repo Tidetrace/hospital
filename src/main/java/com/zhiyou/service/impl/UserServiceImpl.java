@@ -16,8 +16,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
     /**
-    * Derc:安装用户名和密码进行查询
-    */
+     * Derc:安装用户名和密码进行查询
+     */
     public UserModel selectByNP(UserModel userModel) {
         HashMap hashMap = new HashMap();
         hashMap.put("username",userModel.getUsername());
@@ -62,4 +62,5 @@ public class UserServiceImpl implements UserService {
         map.put("id",id);
         return userMapper.updateByUserPwd(map);
     }
+
 }

@@ -13,6 +13,7 @@
         <result column="updater" property="updater"/>
         <result column="update_time" property="update_time"/>
         <collection property="roleAuthorityModels" column="id" select="com.zhiyou.mapper.RoleAuthorityMapper.selectByRoleAuthorityIdParam" ofType="RoleAuthorityModel"/>
+        <collection property="authorityModel" column="id" select="com.zhiyou.mapper.AuthorityMapper.selectByAuthoParam" ofType="AuthorityModel"/>
     </resultMap>
 
 

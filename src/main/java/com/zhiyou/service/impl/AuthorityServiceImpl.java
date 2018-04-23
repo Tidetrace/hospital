@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author HYC
@@ -46,5 +47,10 @@ public class AuthorityServiceImpl implements AuthorityService{
     @Override
     public int deleteResourceByParams(int[] ids) {
         return authorityMapper.deleteResourceByParams(ids);
+    }
+
+    @Override
+    public Set<AuthorityModel> selectByAuthoParam(Integer id) {
+        return authorityMapper.selectByAuthoParam(id);
     }
 }

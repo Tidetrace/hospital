@@ -12,10 +12,9 @@ public class CommonInterceptor implements HandlerInterceptor  {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj) throws Exception {
         Object sessionObj = request.getSession().getAttribute(ADMINSESSION);
         if(sessionObj!=null) {
-            System.out.println("放行....");
             return true;
         }
-        System.out.println("拦截成功.....");
+        //request.getRequestDispatcher("").forward(request,response);
         response.sendRedirect("/user/login.do");
         return false;
     }

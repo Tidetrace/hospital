@@ -18,10 +18,11 @@ public class RoleModel {
     private Timestamp create_time;
     private String updater;
     private Timestamp update_time;
-    //private Set<UserModel> userModel;
-    //private Set<AuthorityModel> authorityModel;
+    private Set<AuthorityModel> authorityModel;
     private Set<RoleAuthorityModel> roleAuthorityModels;
-    // private RoleAuthorityModel roleAuthorityModels;
+
+
+
     //提供对应的get和set方法
     public Integer getId() {
         return id;
@@ -71,12 +72,6 @@ public class RoleModel {
     public void setUpdate_time(Timestamp update_time) {
         this.update_time = update_time;
     }
-	/*public RoleAuthorityModel getRoleAuthorityModels() {
-		return roleAuthorityModels;
-	}
-	public void setRoleAuthorityModels(RoleAuthorityModel roleAuthorityModels) {
-		this.roleAuthorityModels = roleAuthorityModels;
-	}*/
 
     public Set<RoleAuthorityModel> getRoleAuthorityModels() {
         return roleAuthorityModels;
@@ -84,5 +79,13 @@ public class RoleModel {
 
     public void setRoleAuthorityModels(Set<RoleAuthorityModel> roleAuthorityModels) {
         this.roleAuthorityModels = roleAuthorityModels;
+    }
+
+    public Set<AuthorityModel> getAuthorityModel() {
+        return authorityModel;
+    }
+
+    public void setAuthorityModel(Set<AuthorityModel> authorityModel) {
+        this.authorityModel = authorityModel;
     }
 }

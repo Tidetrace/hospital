@@ -78,7 +78,6 @@
     $(function () {
         $('#bt_lon').click(function () {
             $.post('user/loginIn.do',$('#loginForm').serialize(),function (result) {
-                console.log(result+":"+result.err)
                 if(result.message){
                     window.location.href="index.do";
                 }else {
@@ -101,7 +100,7 @@
         $("#loginForm").validate({
             debug:true, //调试模式，即使验证成功也不会跳转到目标页面
             rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
-                username:{
+                userName:{
                     required:true,  //必填。如果验证方法不需要参数，则配置为true
                     rangelength:[6,12]
                 },

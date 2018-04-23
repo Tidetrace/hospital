@@ -23,4 +23,6 @@ public interface UserService {
     int deleteUserByParams(int[] ids);
     //修改密码
     int updateByUserPwd(String newpassword1,Integer id);
+
+
 }

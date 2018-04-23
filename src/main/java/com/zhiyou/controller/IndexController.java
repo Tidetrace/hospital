@@ -26,7 +26,6 @@ public class IndexController {
      */
     @RequestMapping("outLogin")
     public Object loginOut(HttpSession session){
-        System.out.println("调用销毁全局回话");
         session.removeAttribute("user");
         session.invalidate();
         return "login";

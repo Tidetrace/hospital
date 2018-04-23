@@ -84,4 +84,40 @@
             #{ids}
         </foreach>
     </delete>
+
+
+    <!--    <select id="selectByAuthoParam" parameterType="Integer" resultMap="authorityMap">
+            select a.*
+            from  hosp_authority a
+            <where>
+                role_id in
+                (select u.role_id from hosp_user u LEFT JOIN hosp_role r on u.role_id = r.id )
+                AND
+                <if test="_parameter!=null and _parameter!=''">
+                    role_id = #{id}
+                </if>
+            </where>
+            ORDER BY a.id
+        </select>-->
+
+
+    <!--可以用，成功-->
+
+    <select id="selectByAuthoParam" parameterType="Integer" resultMap="authorityMap">
+
+        SELECT * FROM hosp_authority
+        <where>
+            id in(SELECT
+            hra.authority_id
+            FROM
+            hosp_role_authority hra
+            <where>
+                <if test="_parameter!=null and _parameter!=''">
+                    role_id = #{id}
+                </if>
+            </where>
+            )
+        </where>
+        ORDER BY id
+    </select>
 </mapper>

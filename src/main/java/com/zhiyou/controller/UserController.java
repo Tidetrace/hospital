@@ -2,10 +2,8 @@ package com.zhiyou.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.zhiyou.model.AuthorityModel;
-import com.zhiyou.model.RoleAuthorityModel;
-import com.zhiyou.model.RoleModel;
-import com.zhiyou.model.UserModel;
+import com.zhiyou.model.*;
+import com.zhiyou.service.AuthorityService;
 import com.zhiyou.service.UserService;
 import com.zhiyou.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,32 @@ import java.util.*;
  * @Author: HYC
  * Derc:用户登录
  */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @Controller
 @RequestMapping(value = "/user",method = {RequestMethod.GET,RequestMethod.POST})
 public class UserController extends BaseConstant {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthorityService authorityService;
 
     /**
      * Derc:跳转到登录
@@ -56,6 +74,28 @@ public class UserController extends BaseConstant {
                 //在数据库查询不到用户名和密码的信息
                 if (user != null) {
                     // menus(request,model);
+
+                    Map mapOn =null;
+                    List<Object> listOut =null;
+                    Set<AuthorityModel> authorityModels = authorityService.selectByAuthoParam(user.getRoleModel().getId());
+                    model.addAttribute("autho",authorityModels);
+                    for (AuthorityModel a:
+                            authorityModels) {
+                        System.out.println("权限："+a.getAuthority_name()+":"+a.getAuthority_url());
+                        mapOn = new HashMap();
+                        mapOn.put("id",a.getId().toString());
+                        mapOn.put("text",a.getAuthority_name());
+                        mapOn.put("href",a.getAuthority_url());
+                        listOut = new ArrayList();
+                        listOut.add(map.get("id"));
+                        listOut.add(map.get("text"));
+                        listOut.add(map.get("text"));
+                    }
+
+
+
+
+
                     request.getSession().setAttribute("user", user);
                     map.put(MESSAGE, true);
                 }  else {
@@ -217,8 +257,8 @@ public class UserController extends BaseConstant {
 
 
     /*
-    *@Derc:跳转到修改密码模块
-    */
+     *@Derc:跳转到修改密码模块
+     */
     @RequestMapping("editUserPwd")
     public Object editSkipPwd(){
         return "/User/changePwdr";
@@ -235,7 +275,7 @@ public class UserController extends BaseConstant {
         //判断旧密码是否是空值
         if(oldpassword!=null){
             UserModel userModels = userService.selectUserById(userModel.getId());
-            if(userModels.getPassword()==(MD5Utils.str2MD5(oldpassword))){// 判断从数据查询的密码和前台传的密码是否一致
+            if(userModels.getPassword().equals(MD5Utils.str2MD5(oldpassword))){// 判断从数据查询的密码和前台传的密码是否一致
                 if(newpassword1.equals(newpassword2)){ //判断输入的两个密码是否一致
                     newpassword1 = MD5Utils.str2MD5(newpassword1);
                     System.out.println("加密后："+newpassword1);
@@ -261,6 +301,22 @@ public class UserController extends BaseConstant {
         }
         return map;
     }
+
+    @RequestMapping(value = "menusByparam",method = RequestMethod.POST)
+    public Object menus(HttpServletRequest request,Model model){
+        Map map  = new HashMap();
+        UserModel users = (UserModel) request.getSession().getAttribute("user");
+        Set<AuthorityModel> authorityModels = authorityService.selectByAuthoParam(users.getRoleModel().getId());
+        if(authorityModels!=null){
+            map.put(MESSAGE,true);
+            model.addAttribute("autho",authorityModels);
+        }else {
+            map.put(MESSAGE,false);
+            map.put(ERROR,"查询不到该信息...");
+        }
+        return map;
+    }
+
 
 }
 
