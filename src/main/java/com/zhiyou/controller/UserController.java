@@ -227,35 +227,6 @@ public class UserController extends BaseConstant {
         return map;
     }
 
-
-
-
-    /**
-     * Derc: 权限页面上显示的菜单
-     */
-    /*public Object menus(HttpServletRequest request,Model model){
-        UserModel userModel = (UserModel) request.getSession().getAttribute("user");
-        //进行用户权限校验
-        RoleModel roleModel=  userModel.getRoleModel();
-        System.out.println(">>>>>>角色为："+roleModel.getRole_name());
-        //获得对应的权限信息
-        Set<RoleAuthorityModel> roleAuthoritys = roleModel.getRoleAuthorityModels();
-        for (RoleAuthorityModel ru:
-                roleAuthoritys) {
-            Set<AuthorityModel> authorityModel  =  ru.getAuthorityModel();
-            model.addAttribute("authority",authorityModel);
-            for (AuthorityModel au:
-                    authorityModel) {
-                model.addAttribute("id",au.getId());
-                model.addAttribute("name",au.getAuthority_name());
-                model.addAttribute("url",au.getAuthority_url());
-                System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>用户为："+au.getId()+"角色为："+roleModel.getRole_name()+"权限为："+au.getAuthority_name());
-            }
-        }
-        return "index";
-    }*/
-
-
     /*
      *@Derc:跳转到修改密码模块
      */
@@ -302,19 +273,33 @@ public class UserController extends BaseConstant {
         return map;
     }
 
-    @RequestMapping(value = "menusByparam",method = RequestMethod.POST)
-    public Object menus(HttpServletRequest request,Model model){
-        Map map  = new HashMap();
+
+
+    @ResponseBody
+    @RequestMapping(value = "menus",method = RequestMethod.GET)
+    public Object menu(HttpServletRequest request){
+        //从session中把权限列表取出
         UserModel users = (UserModel) request.getSession().getAttribute("user");
         Set<AuthorityModel> authorityModels = authorityService.selectByAuthoParam(users.getRoleModel().getId());
-        if(authorityModels!=null){
-            map.put(MESSAGE,true);
-            model.addAttribute("autho",authorityModels);
-        }else {
-            map.put(MESSAGE,false);
-            map.put(ERROR,"查询不到该信息...");
+
+        List<Map> menus = new ArrayList<>();
+
+        for(AuthorityModel model : authorityModels){
+            HashMap map = new HashMap();
+            map.put("id",model.getId());
+            map.put("text",model.getAuthority_name());
+            map.put("href",model.getAuthority_url());
+
+            menus.add(map);
         }
-        return map;
+
+        for (Object o:menus
+             ) {
+            System.out.println(o);
+        }
+        //封装后的数据共享出去。。
+        request.setAttribute("menus",menus);
+        return menus;
     }
 
 
