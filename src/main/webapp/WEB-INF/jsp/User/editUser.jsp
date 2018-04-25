@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: HYC
@@ -64,9 +65,9 @@
             <td>
                 <select name="roleModel.id">
                     <option value="">--请选择--
-                    <option value="1" selected>管理员
-                    <option value="2">院长
-                    <option value="3">医生护士
+                        <c:forEach var="role" items="${role}">
+                    <option value="${role.id}">${role.role_name}</option>
+                    </c:forEach>
                 </select>
             </td>
         </tr>
@@ -101,7 +102,7 @@
             window.location.href="user/userIndex.do";
         });
     });
-
+    // 判断状态(启动或者禁用)
     $(function () {
         if (${use.state==1}) {
             $("#r1").attr("checked","checked");

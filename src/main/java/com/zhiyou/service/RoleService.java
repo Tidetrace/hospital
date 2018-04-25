@@ -12,4 +12,6 @@ import java.util.List;
 public interface RoleService {
     //查询角色的全部信息 分页模糊查询
     List<RoleModel> selectRoleAllByParam(String role_name);
+    //添加角色信息
+    int saveRoleById(RoleModel roleModel);
 }

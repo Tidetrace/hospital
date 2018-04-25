@@ -10,8 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author HYC
@@ -46,10 +50,6 @@ public class PrescribeController {
         RegistinfoModel registinfoModels = registrationService.selectRegByParam(regNum);
         //查询所有药品信息
         List<DrugModel> drugModels = medicineService.selectDrugAll(drugName,drugType);
-        for (DrugModel du:
-             drugModels) {
-            System.out.println(">>>>>>>>>>>"+du.getDrug_name());
-        }
         if(registinfoModels!=null||drugModels!=null){
             model.addAttribute("inhosp",registinfoModels);
             model.addAttribute("drug",drugModels);
@@ -58,4 +58,25 @@ public class PrescribeController {
         }
         return "error404";
     }
+
+
+    /*
+    *@Derc:医生发药
+    */
+    @ResponseBody
+    @RequestMapping(value = "addPillsAll",method = RequestMethod.POST)
+    public Object sendPills(@RequestParam String regNum, HttpServletRequest request){
+        System.out.println("挂号编号："+regNum);
+        String[] strings = request.getParameterValues("drugNum");
+        System.out.println("全部药品："+strings);
+        for (String s: strings
+             ) {
+            System.out.println(">>>>>"+s);
+        }
+
+        Map map = new HashMap();
+
+        return map;
+    }
+
 }

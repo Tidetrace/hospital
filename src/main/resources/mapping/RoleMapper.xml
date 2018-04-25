@@ -4,7 +4,6 @@
 
     <resultMap id="roleMap" type="RoleModel">
         <id property="id" column="id"/>
-        <result column="role_num" property="role_num"/>
         <result column="role_name" property="role_name"/>
         <result column="real_name" property="real_name"/>
         <result column="state" property="state"/>
@@ -36,5 +35,38 @@
             </if>
         </where>
     </select>
+
+    <!--添加角色到hosp_role表,并且返回添加的那条id-->
+    <insert id="saveRoleById" parameterType="RoleModel" keyProperty="id" useGeneratedKeys="true">
+        insert into hosp_role
+        <trim suffixOverrides="," prefix="(" suffix=")">
+            <if test="role_name!=null">
+                role_name,
+            </if>
+            <if test="state!=null">
+                state,
+            </if>
+            <if test="creater!=null">
+                creater,
+            </if>
+            <if test="create_time!=null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")"  suffixOverrides=",">
+            <if test="role_name!=null">
+                #{role_name},
+            </if>
+            <if test="state!=null">
+                #{state},
+            </if>
+            <if test="creater!=null">
+                #{creater},
+            </if>
+            <if test="create_time!=null">
+                #{create_time},
+            </if>
+        </trim>
+    </insert>
 
 </mapper>

@@ -82,7 +82,6 @@
 
        $.get('user/menus.do',function (result) {
 
-           console.log(result);
            menus = result;
 
            BUI.use('common/main',function(){

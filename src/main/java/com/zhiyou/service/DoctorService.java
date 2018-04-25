@@ -2,6 +2,7 @@ package com.zhiyou.service;
 
 import com.zhiyou.model.DoctorModel;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -18,4 +19,6 @@ public interface DoctorService {
     int saveDocAll(DoctorModel doctorModel);
     //修改医生信息
     int updateDocParam(DoctorModel doctorModel);
+
+    InputStream getInputStream();
 }

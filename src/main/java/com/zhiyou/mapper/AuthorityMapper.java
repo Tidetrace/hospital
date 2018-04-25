@@ -10,7 +10,7 @@ import java.util.Set;
  * @date 2018/4/10 10:41
  * @Derc:   权限校验
  */
-public interface AuthorityMapper {
+public interface AuthorityMapper{
     //用户角色权限查询
     Set<AuthorityModel> selectByAuthorityIdParam(Integer authority_id);
 

@@ -1,17 +1,18 @@
 package com.zhiyou.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
 /**
-* @Author: HYC
-* Derc:生成验证码
-*/
-public class AuthorityModel {
-	
+ * @Author: HYC
+ * Derc:权限实体类
+ */
+public class AuthorityModel implements Serializable {
+
 	private Integer id;
 	private String authority_name;
-	private String authority_url;	
+	private String authority_url;
 	private Integer state;
 	private String creater;
 	private Timestamp create_time;

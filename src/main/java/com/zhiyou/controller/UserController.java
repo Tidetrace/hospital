@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zhiyou.model.*;
 import com.zhiyou.service.AuthorityService;
+import com.zhiyou.service.RoleService;
 import com.zhiyou.service.UserService;
 import com.zhiyou.util.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,9 @@ public class UserController extends BaseConstant {
     @Autowired
     private AuthorityService authorityService;
 
+    @Autowired
+    private RoleService roleService;
+
     /**
      * Derc:跳转到登录
      */
@@ -73,29 +77,6 @@ public class UserController extends BaseConstant {
                 UserModel user = userService.selectByNP(userModel);
                 //在数据库查询不到用户名和密码的信息
                 if (user != null) {
-                    // menus(request,model);
-
-                    Map mapOn =null;
-                    List<Object> listOut =null;
-                    Set<AuthorityModel> authorityModels = authorityService.selectByAuthoParam(user.getRoleModel().getId());
-                    model.addAttribute("autho",authorityModels);
-                    for (AuthorityModel a:
-                            authorityModels) {
-                        System.out.println("权限："+a.getAuthority_name()+":"+a.getAuthority_url());
-                        mapOn = new HashMap();
-                        mapOn.put("id",a.getId().toString());
-                        mapOn.put("text",a.getAuthority_name());
-                        mapOn.put("href",a.getAuthority_url());
-                        listOut = new ArrayList();
-                        listOut.add(map.get("id"));
-                        listOut.add(map.get("text"));
-                        listOut.add(map.get("text"));
-                    }
-
-
-
-
-
                     request.getSession().setAttribute("user", user);
                     map.put(MESSAGE, true);
                 }  else {
@@ -137,6 +118,10 @@ public class UserController extends BaseConstant {
      */
     @RequestMapping(value = "editSkip/{id}")
     public Object ediSkip(@PathVariable("id") Integer id,Model model){
+        List<RoleModel> roleModels = roleService.selectRoleAllByParam("");
+        if(roleModels!=null){
+            model.addAttribute("role",roleModels);
+        }
         UserModel userModels = userService.selectUserById(id);
         if(userModels!=null){
             model.addAttribute("use",userModels);
@@ -155,6 +140,7 @@ public class UserController extends BaseConstant {
     @RequestMapping(value = "editUserss",method = RequestMethod.POST)
     public Object editUsers(UserModel userModel){
         Map map =new HashMap();
+        userModel.setPassword(MD5Utils.str2MD5(userModel.getPassword()));
         userModel.setUpdater(userModel.getUsername());
         userModel.setUpdate_time(new Timestamp(new Date().getTime()));
         int i = userService.updateUserIdById(userModel);
@@ -171,7 +157,11 @@ public class UserController extends BaseConstant {
      *Derc:跳转到用户添加页面
      */
     @RequestMapping(value = "addSkip",method = RequestMethod.GET)
-    public Object addUser(){
+    public Object addUser(Model model){
+        List<RoleModel> roleModels = roleService.selectRoleAllByParam("");
+        if(roleModels!=null){
+            model.addAttribute("role",roleModels);
+        }
         return "User/addUser";
     }
 
@@ -184,6 +174,7 @@ public class UserController extends BaseConstant {
     @RequestMapping(value = "addUserss",method = RequestMethod.POST)
     public Object addUsers(UserModel userModel){
         Map map =new HashMap();
+        userModel.setPassword(MD5Utils.str2MD5(userModel.getPassword()));
         userModel.setCreater(userModel.getUsername());
         userModel.setCreate_time(new Timestamp(new Date().getTime()));
         int i = userService.saveUserInfo(userModel);
@@ -249,7 +240,6 @@ public class UserController extends BaseConstant {
             if(userModels.getPassword().equals(MD5Utils.str2MD5(oldpassword))){// 判断从数据查询的密码和前台传的密码是否一致
                 if(newpassword1.equals(newpassword2)){ //判断输入的两个密码是否一致
                     newpassword1 = MD5Utils.str2MD5(newpassword1);
-                    System.out.println("加密后："+newpassword1);
                     int i = userService.updateByUserPwd(newpassword1,userModel.getId());
                     if(i>0){
                         map.put(MESSAGE,true);
@@ -277,26 +267,38 @@ public class UserController extends BaseConstant {
 
     @ResponseBody
     @RequestMapping(value = "menus",method = RequestMethod.GET)
-    public Object menu(HttpServletRequest request){
+    public synchronized Object menu(HttpServletRequest request){
         //从session中把权限列表取出
         UserModel users = (UserModel) request.getSession().getAttribute("user");
         Set<AuthorityModel> authorityModels = authorityService.selectByAuthoParam(users.getRoleModel().getId());
-
+        //讲查询的信息放到list，map集合中
         List<Map> menus = new ArrayList<>();
-
         for(AuthorityModel model : authorityModels){
             HashMap map = new HashMap();
             map.put("id",model.getId());
             map.put("text",model.getAuthority_name());
             map.put("href",model.getAuthority_url());
-
+            //讲map添加到list集合中
             menus.add(map);
         }
+        //对list进行重新按照glxxlx进行升序-从小到大
 
-        for (Object o:menus
-             ) {
-            System.out.println(o);
+        if (null != menus&& menus.size()>0) {
+            Collections.sort(menus, new Comparator<Map>() {
+                @Override
+                public int compare(Map o1, Map o2) {
+                    int ret = 0;
+                    //比较两个对象的顺序，如果前者小于、等于或者大于后者，则分别返回-1/0/1
+                    ret = o1.get("id").toString().compareTo(o2.get("id").toString());//逆序的话就用o2.compareTo(o1)即可
+                    return ret;
+                }
+            });
         }
+
+ /*       for (Object o:menus
+                ) {
+            System.out.println(o);
+        }*/
         //封装后的数据共享出去。。
         request.setAttribute("menus",menus);
         return menus;

@@ -1,5 +1,6 @@
 package com.zhiyou.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ import java.util.Set;
  * @author Administrator
  *
  */
-public class UserModel {
+public class UserModel implements Serializable {
 	private Integer id;
 	private String username;
 	private String password;

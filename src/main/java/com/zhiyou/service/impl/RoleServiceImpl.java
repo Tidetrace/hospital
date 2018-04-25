@@ -23,4 +23,9 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleModel> selectRoleAllByParam(String role_name) {
         return roleMapper.selectRoleAllByParam(role_name);
     }
+
+    @Override
+    public int saveRoleById(RoleModel roleModel) {
+        return roleMapper.saveRoleById(roleModel);
+    }
 }

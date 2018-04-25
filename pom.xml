@@ -139,13 +139,12 @@
             <version>5.2.11.Final</version>
         </dependency>
 
-        <!--将数据导出excel-->
+        <!--将数据导出excel,需要导入poi-ooxml-->
         <dependency>
             <groupId>org.apache.poi</groupId>
-            <artifactId>poi</artifactId>
+            <artifactId>poi-ooxml</artifactId>
             <version>3.17</version>
         </dependency>
-
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

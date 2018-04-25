@@ -149,16 +149,10 @@
 <script>
     $(function () {
        $('#delPro').click(function () {
-           alert("导出")
-           $.post('doctor/doExport.do',function (result) {
-               if(result.MESSAGE){
-                   if(result.message){
-                       window.location.href="doctor/index.do";
-                   }else {
-                       alert(result.error);
-                   }
-               }
-           },'json');
+           if(confirm("确定导出医生信息?")){
+               //点击确定后操作
+               window.location="doctor/exportactor.do";
+           }
        });
     });
 </script>

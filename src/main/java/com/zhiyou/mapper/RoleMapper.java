@@ -16,4 +16,8 @@ public interface RoleMapper {
 
     //查询角色的全部信息 分页模糊查询
     List<RoleModel> selectRoleAllByParam(String role_name);
+    //添加角色到hosp_role表
+    int saveRoleById(RoleModel roleModel);
+
+
 }

@@ -1,5 +1,6 @@
 package com.zhiyou.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Set;
@@ -9,9 +10,8 @@ import java.util.Set;
  * @author Administrator
  *
  */
-public class RoleModel {
+public class RoleModel implements Serializable {
     private Integer id;
-    private String role_num;
     private String role_name;
     private Integer state;
     private String creater;
@@ -29,12 +29,6 @@ public class RoleModel {
     }
     public void setId(Integer id) {
         this.id = id;
-    }
-    public String getRole_num() {
-        return role_num;
-    }
-    public void setRole_num(String role_num) {
-        this.role_num = role_num;
     }
     public String getRole_name() {
         return role_name;

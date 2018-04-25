@@ -136,31 +136,44 @@
     function selectByRegNum() {
         /* 输入病历编号 查询这个人的信息*/
         var regNum = $('#regNum').val()
-        $('#bd').load('/pres/ByHospRegNum.do',{regNum:regNum});
+        $('#bd').load('/pres/ByHospRegNum.do',{regNum:regNum},function () {
+            $('#btSave').click(function () {
+
+            });
+        });
     }
     /*根据病历编号，批量添加药品和数量*/
     $(function () {
         $('#btSave').click(function () {
             // 判断 name=fruit 组的复选框是否有被选中的选项：
-            <!--获取选中复选框的值-->
-            var arr = new Array();
-            var inx = new Array();
+          <!--获取选中复选框的值-->
+          /*  var arr = new Array();
             $("input[name='drugNum']").each(function(i){
                 if($(this).is(':checked')){
                     arr[i] = $(this).val();
-                }
+                }*/
+               // alert(arr)
+                var regNum = $('#regNum').val()
+               /* $.post('pres/addPillsAll.do',{regNum:regNum},function (result) {
+                    if(result.message){
+                        alert("成功")
+                    }else {
+                        alert("失败")
+                    }
+                },'json')*/
+
             });
-           /* $("input[name='gross_purchases']").each(function (i) {
-                if($(this!=null && this!=''&&this!=0)){
-                    inx[i] = $(this).val()
-                }
-            })*/
+
+
+            /* $("input[name='gross_purchases']").each(function (i) {
+                 if($(this!=null && this!=''&&this!=0)){
+                     inx[i] = $(this).val()
+                 }
+             })*/
             //var vals = arr.join(",");
             //console.log(vals);
-            alert(arr)
-            alert(inx)
+
         });
-    });
 </script>
 </body>
 </html>

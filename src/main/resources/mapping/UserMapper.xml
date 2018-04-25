@@ -17,7 +17,7 @@
     </resultMap>
 
     <select id="selectByNP" resultMap="userMap" parameterType="java.util.HashMap">
-        SELECT * from hosp_user WHERE username=#{username} and password=#{password}
+        SELECT * from hosp_user WHERE username=#{username} and password=#{password} and state = 1
     </select>
 
 
@@ -65,10 +65,60 @@
 
     <!--添加用户-->
     <insert id="saveUserInfo" parameterType="UserModel">
-        insert into hosp_user(username,password,real_name,email,state,creater,create_time,role_id)
-        values(#{username},#{password},#{real_name},#{email},#{state},#{creater},#{create_time},#{roleModel.id})
+        insert into hosp_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="username != null" >
+                username,
+            </if>
+            <if test="password != null" >
+                password,
+            </if>
+            <if test="real_name != null" >
+                real_name,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="state != null" >
+                state,
+            </if>
+            <if test="creater != null" >
+                creater,
+            </if>
+            <if test="create_time != null" >
+                create_time,
+            </if>
+            <if test="roleModel.id != null" >
+                role_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="username != null" >
+                #{username},
+            </if>
+            <if test="password != null" >
+                #{password},
+            </if>
+            <if test="real_name != null" >
+                #{real_name},
+            </if>
+            <if test="email != null" >
+                #{email},
+            </if>
+            <if test="state != null" >
+                #{state},
+            </if>
+            <if test="creater != null" >
+                #{creater},
+            </if>
+            <if test="create_time != null" >
+                #{create_time},
+            </if>
+            <if test="roleModel.id != null" >
+                #{roleModel.id},
+            </if>
+        </trim>
     </insert>
-
 
     <!--根据用户编号删除用户信息-->
     <delete id="deleteUserById" parameterType="Integer">

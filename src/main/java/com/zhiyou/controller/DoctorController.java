@@ -9,6 +9,7 @@ import com.zhiyou.model.UserModel;
 import com.zhiyou.service.DoctorService;
 import com.zhiyou.util.*;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -154,7 +155,7 @@ public class DoctorController extends BaseConstant {
     /**
      * Derc: 导出数据到excel
      */
-    @RequestMapping("doExport")
+    /*@RequestMapping("doExport")
     @ResponseBody
     public Object doExportDoc(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //查询所有信息
@@ -188,9 +189,9 @@ public class DoctorController extends BaseConstant {
 
 
         //获取客户的浏览器类型
-       /* UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+       *//* UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
         Browser browser = userAgent.getBrowser();
-        OperatingSystem os = userAgent.getOperatingSystem();*/
+        OperatingSystem os = userAgent.getOperatingSystem();*//*
         //filename = FileUtils.
         String userAgent = request.getHeader("User-Agent");
         filename = FileUtils.encodeDownloadFilename(filename,userAgent);
@@ -202,7 +203,7 @@ public class DoctorController extends BaseConstant {
         FileOutputStream  bufferedOutPut = new FileOutputStream ("G:/素材/医生查询信息.xls");
         workbook.write(out);
         System.out.println(">>>>>>>>>>>传送"+out);
-        /*try {
+        *//*try {
             //输入流
             InputStream fis = new BufferedInputStream(new FileInputStream(filename));
             byte[] buffer = new byte[fis.available()];
@@ -215,12 +216,20 @@ public class DoctorController extends BaseConstant {
 
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }*//*
 
         return null;
     }
+*/
 
-
-
+    @RequestMapping("/exportactor")
+    public void export(HttpServletResponse response) throws Exception{
+        InputStream is=doctorService.getInputStream();
+        System.out.println(">>>>>>>进来了");
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("contentDisposition", "attachment;filename=hospDoctor.xls");
+        ServletOutputStream output = response.getOutputStream();
+        IOUtils.copy(is, output);
+    }
 
 }
