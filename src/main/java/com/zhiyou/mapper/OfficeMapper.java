@@ -1,6 +1,9 @@
 package com.zhiyou.mapper;
 
 import com.zhiyou.model.DoctorModel;
+import com.zhiyou.model.OfficeModel;
+
+import java.util.List;
 
 /**
  * @author HYC
@@ -10,4 +13,6 @@ import com.zhiyou.model.DoctorModel;
 public interface OfficeMapper {
     //根据office_id查询
     public DoctorModel selectById(Integer office_id);
+    //查询详细信息，科室
+    List<OfficeModel> selectOfficeByAll(String str);
 }

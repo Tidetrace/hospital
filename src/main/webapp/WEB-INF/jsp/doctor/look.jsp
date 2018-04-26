@@ -97,6 +97,12 @@
             </td>
         </tr>
         <tr>
+            <td width="10%" class="tableleft">入院时间</td>
+            <td>
+                <f:formatDate value="${doc.pass_time}" pattern="yyyy-MM-dd HH:mm:ss"></f:formatDate>
+            </td>
+        </tr>
+        <tr>
             <td width="10%" class="tableleft">电子邮箱</td>
             <td>${doc.email}</td>
         </tr>

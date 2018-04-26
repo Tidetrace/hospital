@@ -7,5 +7,5 @@ package com.zhiyou.service;
  */
 public interface RoleAuthorityService {
     //添加角色权限信息到角色权限表
-    int saveRoleAuthorityById(String[] str, Integer id);
+    int saveRoleAuthorityById(String s, Integer id);
 }

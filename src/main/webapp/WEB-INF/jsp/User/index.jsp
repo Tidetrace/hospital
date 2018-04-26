@@ -84,7 +84,7 @@
 <form class="form-inline definewidth m20" action="/user/userIndex.do" method="get">
     用户名称：
     <input type="text" name="username" id="username"class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
-    <button type="submit" class="btn btn-primary">查询</button>
+    <button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i>搜索</button>
 </form>
 <table class="table table-bordered table-hover definewidth m10">
     <thead>

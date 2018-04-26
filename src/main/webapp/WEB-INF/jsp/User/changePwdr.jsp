@@ -39,15 +39,15 @@
 <form action="" id="user_form" method="post" class="definewidth m20">
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
-            <td width="10%" class="tableleft">旧密码</td>
+            <td width="10%" class="tableleft"><img src="Images/MiMa.png" width="15px" height="15px">&nbsp;旧密码</td>
             <td><input type="text" id="oldpassword" name="oldpassword" placeholder="请输入旧密码" value=""></td>
         </tr>
         <tr>
-            <td class="tableleft">新密码</td>
+            <td class="tableleft"><img src="Images/yaoshi.png" width="15px" height="15px">&nbsp;新密码:</td>
             <td><input type="password" id="newpassword1" name="newpassword1" placeholder="请输入新密码" value=""/></td>
         </tr>
         <tr>
-            <td class="tableleft">新密码</td>
+            <td class="tableleft"><img src="Images/yaoshi.png" width="15px" height="15px">&nbsp;新密码</td>
             <td><input type="password" id="newpassword2"  name="newpassword2" placeholder="请再次输入新密码" value=""/></td>
         </tr>
         <tr>
@@ -84,7 +84,7 @@
 <script>
     $(function () {
         $('#backid').click(function(){
-            window.location.href="user/userIndex.do";
+            window.location.reload();
         });
     });
 </script>

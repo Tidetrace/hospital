@@ -19,6 +19,8 @@ public interface DoctorService {
     int saveDocAll(DoctorModel doctorModel);
     //修改医生信息
     int updateDocParam(DoctorModel doctorModel);
-
+    //根据id删除医生信息
+    int delDoctorById(Integer id);
+    //导出数据到Excel
     InputStream getInputStream();
 }

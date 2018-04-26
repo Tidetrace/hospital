@@ -18,6 +18,6 @@ public interface RoleMapper {
     List<RoleModel> selectRoleAllByParam(String role_name);
     //添加角色到hosp_role表
     int saveRoleById(RoleModel roleModel);
-
-
+    //根据角色id删除角色，Hosp_role表
+    int delRoleById(Integer id);
 }

@@ -90,12 +90,19 @@
             <td><input type="text" name="docName" value=""/></td>
 
             <td width="10%" class="tableleft">科室：</td>
-            <td><input type="text" name="offName" value=""/></td>
+            <td>
+                <select name="offName">
+                    <option value="">请选择--</option>
+                    <c:forEach var="office" items="${office}">
+                        <option value="${office.office_name}">${office.office_name}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr>
             <td colspan="6"><center>
-                <button type="submit" class="btn btn-primary" type="button">查询</button>
-                <button type="submit" class="btn btn-primary" type="button">清空</button>
+                <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
+                <button type="reset" class="btn btn-success" type="button">清空</button>
             </center>
             </td>
         </tr>
@@ -113,17 +120,25 @@
         <th>操作</th>
     </tr>
     </thead>
-    <c:forEach var="doc" items="${doc}">
-        <tr >
-            <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-            <td style="vertical-align:middle;">${doc.doctor_num}</td>
-            <td style="vertical-align:middle;">${doc.doctor_name}</td>
-            <td style="vertical-align:middle;"><f:formatDate value="${doc.pass_time}" pattern="yyy-MM-dd HH:mm:ss"/> </td>
-            <td style="vertical-align:middle;">${doc.officeModel.office_name}</td>
-            <td style="vertical-align:middle;"><a href="/doctor/details.do?docId=${doc.doctor_num}">详情>>></a>&nbsp;&nbsp;&nbsp;<a href="/doctor/detailEdit.do?docId=${doc.doctor_num}">更改</a></td>
-        </tr>
-    </c:forEach>
-
+    <c:choose>
+        <c:when test="${not empty doc}">
+            <c:forEach var="doc" items="${doc}">
+                <tr >
+                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
+                    <td style="vertical-align:middle;">${doc.doctor_num}</td>
+                    <td style="vertical-align:middle;">${doc.doctor_name}</td>
+                    <td style="vertical-align:middle;"><f:formatDate value="${doc.pass_time}" pattern="yyy-MM-dd HH:mm:ss"/> </td>
+                    <td style="vertical-align:middle;">${doc.officeModel.office_name}</td>
+                    <td style="vertical-align:middle;"><a href="/doctor/details.do?docId=${doc.doctor_num}">详情>>></a>&nbsp;&nbsp;&nbsp;<a href="/doctor/detailEdit.do?docId=${doc.doctor_num}" onclick="if(confirm('确定修改医生信息?')==false)return false;">更改</a>&nbsp;&nbsp;&nbsp;<a href="/doctor/delDoctor/${doc.id}.do" onclick="if(confirm('确定删除?')==false)return false;" >删除</a></td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
 </table>
 
 <table class="table table-bordered table-hover definewidth m10" >
@@ -141,19 +156,19 @@
         &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
     </div>
         <div><button type="button" class="btn btn-success" id="newNav">添加新医生</button>
-            <button type="button" class="btn btn-success" id="delPro">导出Excel</button>
+            <button type="button" class="btn btn-success" id="delPro"><img src="Images/exportExcel.png" width="18px" height="18px">&nbsp;导出Excel</button>
         </div>
 
     </th></tr>
 </table>
 <script>
     $(function () {
-       $('#delPro').click(function () {
-           if(confirm("确定导出医生信息?")){
-               //点击确定后操作
-               window.location="doctor/exportactor.do";
-           }
-       });
+        $('#delPro').click(function () {
+            if(confirm("确定导出医生信息?")){
+                //点击确定后操作
+                window.location="doctor/exportactor.do";
+            }
+        });
     });
 </script>
 

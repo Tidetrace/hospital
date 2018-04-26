@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-04-20 16:45:22
+Date: 2018-04-25 15:40:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,30 +28,31 @@ CREATE TABLE `hosp_authority` (
   `create_time` datetime DEFAULT NULL,
   `updater` varchar(255) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
+  `role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+  KEY `id` (`id`),
+  KEY `role_id` (`role_id`),
+  CONSTRAINT `hosp_authority_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `hosp_role` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hosp_authority
 -- ----------------------------
-INSERT INTO `hosp_authority` VALUES ('1', '挂号信息管理', 'regis/index.action', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('2', '门诊医生管理', 'doctor/index.action', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('3', '药品管理', 'drug/index.action', '0', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('4', '住院办理', 'inhosp/inhospIndex.do', '1', null, null, '小小', '2018-04-18 15:58:53');
-INSERT INTO `hosp_authority` VALUES ('7', '住院结算', '55454', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('8', '月营业额统计', null, '0', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('9', '年营业额统计', null, '0', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('10', '用户管理', 'user/index.action', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('11', '角色管理', 'role/index.action', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('12', '资源管理', 'authority/index.action', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('13', '密码设置', null, '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('32', 'YUHJ', 'HJG', '0', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('33', '0DKJH', 'UIGY', '1', null, null, null, null);
-INSERT INTO `hosp_authority` VALUES ('34', 'aaaaaa', 'ua.do', '0', '小小', '2018-04-18 15:40:22', null, null);
-INSERT INTO `hosp_authority` VALUES ('35', 'jshd', 'jhaj哈哈哈', '1', '小小', '2018-04-18 15:41:22', '小小', '2018-04-18 15:41:49');
-INSERT INTO `hosp_authority` VALUES ('41', 'dfgdf', 'htr', '0', '小小', '2018-04-18 16:16:30', null, null);
-INSERT INTO `hosp_authority` VALUES ('43', 'wer', 'ert', '0', '小小', '2018-04-18 16:18:35', null, null);
+INSERT INTO `hosp_authority` VALUES ('1', '挂号信息管理', 'reg/regIndex.do', '1', null, null, null, null, '3');
+INSERT INTO `hosp_authority` VALUES ('2', '门诊医生管理', 'doctor/index.do', '1', null, null, null, null, '1');
+INSERT INTO `hosp_authority` VALUES ('3', '药品管理', 'drug/drugIndex.do', '0', null, null, null, null, '1');
+INSERT INTO `hosp_authority` VALUES ('4', '住院办理', 'inhosp/inhospIndex.do', '1', null, null, '小小', '2018-04-18 15:58:53', '1');
+INSERT INTO `hosp_authority` VALUES ('7', '住院结算', '55454', '1', null, null, null, null, '3');
+INSERT INTO `hosp_authority` VALUES ('8', '在线发药', 'pills/pillsIndex.do', '1', null, null, null, null, '2');
+INSERT INTO `hosp_authority` VALUES ('9', '医生开药', 'pres/presIndex.do', '1', null, null, null, null, '2');
+INSERT INTO `hosp_authority` VALUES ('10', '用户管理', 'user/userIndex.do', '1', null, null, null, null, '2');
+INSERT INTO `hosp_authority` VALUES ('11', '角色管理', 'role/roleIndex.do', '1', null, null, null, null, '1');
+INSERT INTO `hosp_authority` VALUES ('12', '资源管理', 'resource/authoIndex.do', '1', null, null, null, null, '3');
+INSERT INTO `hosp_authority` VALUES ('13', '密码设置', 'user/editUserPwd.do', '1', null, null, null, null, '4');
+INSERT INTO `hosp_authority` VALUES ('32', 'YUHJ', 'HJG', '0', null, null, null, null, '4');
+INSERT INTO `hosp_authority` VALUES ('33', '0DKJH', 'UIGY', '1', null, null, null, null, '2');
+INSERT INTO `hosp_authority` VALUES ('35', 'jshd', 'jhaj哈11', '0', '小小', '2018-04-18 15:41:22', '小小', '2018-04-24 11:16:27', '4');
+INSERT INTO `hosp_authority` VALUES ('44', '阿达', '324', '0', '小小', '2018-04-24 11:16:46', null, null, null);
 
 -- ----------------------------
 -- Table structure for hosp_doctor
@@ -304,7 +305,7 @@ CREATE TABLE `hosp_role` (
   `updater` varchar(255) DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hosp_role
@@ -315,6 +316,12 @@ INSERT INTO `hosp_role` VALUES ('3', '一般用户', '333333', '0', null, null, 
 INSERT INTO `hosp_role` VALUES ('4', '黑客黑进去', null, '1', null, null, null, null);
 INSERT INTO `hosp_role` VALUES ('5', '你进不去', '256565', '0', null, null, null, null);
 INSERT INTO `hosp_role` VALUES ('6', '闲杂用户啊', null, '1', null, null, null, null);
+INSERT INTO `hosp_role` VALUES ('7', '哈哈哈', null, '0', '小小', '2018-04-24 17:50:01', null, null);
+INSERT INTO `hosp_role` VALUES ('8', '阿萨德', null, '1', '小小', '2018-04-24 17:50:34', null, null);
+INSERT INTO `hosp_role` VALUES ('9', '地方', null, '0', '小小', '2018-04-24 18:02:16', null, null);
+INSERT INTO `hosp_role` VALUES ('10', 'dsgf 嘉实多', null, '0', '小小', '2018-04-25 09:51:29', null, null);
+INSERT INTO `hosp_role` VALUES ('11', 'gf', null, '0', '小小', '2018-04-25 09:54:39', null, null);
+INSERT INTO `hosp_role` VALUES ('12', '你发吧', null, '1', '小小', '2018-04-25 09:56:36', null, null);
 
 -- ----------------------------
 -- Table structure for hosp_role_authority
@@ -336,12 +343,12 @@ INSERT INTO `hosp_role_authority` VALUES ('1', '1');
 INSERT INTO `hosp_role_authority` VALUES ('1', '2');
 INSERT INTO `hosp_role_authority` VALUES ('1', '3');
 INSERT INTO `hosp_role_authority` VALUES ('1', '4');
-INSERT INTO `hosp_role_authority` VALUES ('1', '8');
 INSERT INTO `hosp_role_authority` VALUES ('1', '9');
 INSERT INTO `hosp_role_authority` VALUES ('1', '10');
 INSERT INTO `hosp_role_authority` VALUES ('1', '11');
 INSERT INTO `hosp_role_authority` VALUES ('1', '12');
 INSERT INTO `hosp_role_authority` VALUES ('1', '13');
+INSERT INTO `hosp_role_authority` VALUES ('2', '3');
 INSERT INTO `hosp_role_authority` VALUES ('2', '8');
 INSERT INTO `hosp_role_authority` VALUES ('2', '9');
 INSERT INTO `hosp_role_authority` VALUES ('2', '10');
@@ -352,6 +359,8 @@ INSERT INTO `hosp_role_authority` VALUES ('3', '1');
 INSERT INTO `hosp_role_authority` VALUES ('3', '2');
 INSERT INTO `hosp_role_authority` VALUES ('3', '3');
 INSERT INTO `hosp_role_authority` VALUES ('3', '4');
+INSERT INTO `hosp_role_authority` VALUES ('4', '1');
+INSERT INTO `hosp_role_authority` VALUES ('4', '4');
 INSERT INTO `hosp_role_authority` VALUES ('6', '1');
 INSERT INTO `hosp_role_authority` VALUES ('6', '10');
 INSERT INTO `hosp_role_authority` VALUES ('6', '13');
@@ -376,22 +385,22 @@ CREATE TABLE `hosp_user` (
   UNIQUE KEY `UK_620wsjgp6dmwct9ycoyw4rlsb` (`username`),
   KEY `FKcd615691nv3hn3pv88eok3oqv` (`role_id`),
   CONSTRAINT `FKcd615691nv3hn3pv88eok3oqv` FOREIGN KEY (`role_id`) REFERENCES `hosp_role` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of hosp_user
 -- ----------------------------
-INSERT INTO `hosp_user` VALUES ('1', 'aa', '4124bc0a9335c27f086f24ba207a4912', '1', null, '阿珂', '3', null, null, null, null);
-INSERT INTO `hosp_user` VALUES ('3', '小小', '4124bc0a9335c27f086f24ba207a4912', '1', 'hh@126.c', '郑爽', '1', null, null, '小小', '2018-04-16 15:50:13');
+INSERT INTO `hosp_user` VALUES ('1', 'aa', '4124bc0a9335c27f086f24ba207a4912', '0', null, '阿珂', '2', null, null, 'aa', '2018-04-24 11:18:02');
+INSERT INTO `hosp_user` VALUES ('3', '小小', 'e10adc3949ba59abbe56e057f20f883e', '1', 'hh@126.c', '郑爽', '1', null, null, '小小', '2018-04-16 15:50:13');
 INSERT INTO `hosp_user` VALUES ('4', 'hh', '5e36941b3d856737e81516acd45edc50', '1', 'hh@126.cqqqqq', '韩寒', '3', 'dfg', '2017-10-16 10:38:32', 'hh', '2018-04-16 15:53:24');
 INSERT INTO `hosp_user` VALUES ('14', 'sdfdsfs', 'sdfds', '1', 'sdfds@dfs.com', 'sdfsd', '3', null, null, null, null);
-INSERT INTO `hosp_user` VALUES ('15', '潮痕', 'chaohen', '1', 'chaohen@126.com', 'HYC', '2', null, null, null, null);
 INSERT INTO `hosp_user` VALUES ('17', '丫丫', 'yaya', '1', 'yaya@qq.com', '呀呀', '1', '丫丫', '2018-04-16 15:43:51', '丫丫', '2018-04-16 15:44:14');
 INSERT INTO `hosp_user` VALUES ('18', '哈哈', 'haha', '0', 'haha@yeah.net', '不知道', '2', '哈哈', '2018-04-16 15:46:11', null, null);
-INSERT INTO `hosp_user` VALUES ('19', null, null, null, null, null, null, null, '2018-04-20 11:58:38', null, null);
-INSERT INTO `hosp_user` VALUES ('20', null, null, null, null, null, null, null, '2018-04-20 12:03:11', null, null);
-INSERT INTO `hosp_user` VALUES ('21', null, null, null, null, null, null, null, '2018-04-20 12:04:35', null, null);
-INSERT INTO `hosp_user` VALUES ('22', null, null, null, null, null, null, null, '2018-04-20 12:06:24', null, null);
+INSERT INTO `hosp_user` VALUES ('19', '舞蹈服', '123', '1', '232@qq', '但是', '2', '舞蹈服', '2018-04-24 11:20:06', null, null);
+INSERT INTO `hosp_user` VALUES ('20', '韩燕超', '123456', '0', 'hy@qq,com', '韩燕超', '3', '韩燕超', '2018-04-24 11:27:34', '韩燕超', '2018-04-24 11:29:02');
+INSERT INTO `hosp_user` VALUES ('27', 'gfh', '123456fdgfd', '0', 'dfs@qq.com', 'dffvbv', '5', 'gfh', '2018-04-24 14:20:43', null, null);
+INSERT INTO `hosp_user` VALUES ('34', 'sdf', '23423423', '1', 'sdf@qq.com', 'dsfsd', '6', 'sdf', '2018-04-24 14:22:19', 'sdf', '2018-04-24 14:22:33');
+INSERT INTO `hosp_user` VALUES ('70', 'admin', '4124bc0a9335c27f086f24ba207a4912', '1', '', '', '2', 'admin', '2018-04-24 16:31:19', 'admin', '2018-04-24 16:36:14');
 
 -- ----------------------------
 -- Table structure for online_pills
@@ -425,5 +434,5 @@ INSERT INTO `online_pills` VALUES ('26', 'b1105', '38', '38', 'C3TIY85U', 'admin
 INSERT INTO `online_pills` VALUES ('27', 'b1107', '25', '0', '15454545', 'admin', '2018-04-19 09:45:22', null, '2018-04-19 09:45:22');
 INSERT INTO `online_pills` VALUES ('28', 'jsdhjj', '35', '4', '15454546', 'admin', '2018-04-19 09:59:50', '小小', '2018-04-19 09:59:51');
 INSERT INTO `online_pills` VALUES ('29', 'rdtdfgd', '20', '20', '15454545', '小小', '2018-04-11 14:15:45', '小小', '2018-04-11 14:15:45');
-INSERT INTO `online_pills` VALUES ('31', 'jsdhjj', '150', '57', 'I833BFQA', '小小', '2018-04-19 09:59:54', '小小', '2018-04-19 09:59:54');
-INSERT INTO `online_pills` VALUES ('32', '4Y274jo0', null, '1', '15454545', '小小', '2018-04-19 10:00:15', null, null);
+INSERT INTO `online_pills` VALUES ('31', 'jsdhjj', '145', '57', 'I833BFQA', '小小', '2018-04-23 10:04:51', '小小', '2018-04-23 10:04:51');
+INSERT INTO `online_pills` VALUES ('32', '4Y274jo0', '32', '1', '15454545', '小小', '2018-04-23 10:04:54', null, '2018-04-23 10:04:54');

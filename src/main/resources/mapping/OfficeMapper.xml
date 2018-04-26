@@ -10,7 +10,18 @@
         <result property="updater" column="updater"/>
         <result property="update_time" column="update_time"/>
     </resultMap>
+    <select id="selectOfficeByAll" parameterType="String" resultMap="offMap">
+        select * from hosp_office
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                office_name = #{str}
+            </if>
+        </where>
+    </select>
+
     <select id="selectById" resultMap="offMap" parameterType="java.lang.Integer">
         SELECT * FROM hosp_office WHERE id = #{office_id}
     </select>
+
+
 </mapper>

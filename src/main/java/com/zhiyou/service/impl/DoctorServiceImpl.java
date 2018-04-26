@@ -45,6 +45,12 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.updateDocParam(doctorModel);
     }
 
+
+    @Override
+    public int delDoctorById(Integer id) {
+        return doctorMapper.delDoctorById(id);
+    }
+
     @Override
     public InputStream getInputStream(){
         /**
@@ -82,4 +88,5 @@ public class DoctorServiceImpl implements DoctorService {
         }
         return null;
     }
+
 }

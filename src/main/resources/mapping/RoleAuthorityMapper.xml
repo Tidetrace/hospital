@@ -14,4 +14,35 @@
             </if>
         </where>
     </select>
+    <!--添加角色权限信息-->
+    <insert id="saveRoleAuthorityById" parameterType="java.util.Map">
+        insert into hosp_role_authority
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="role_id!=null">
+                role_id,
+            </if>
+            <if test="autho_id!=null">
+                authority_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="role_id!=null">
+                #{role_id},
+            </if>
+            <if test="autho_id!=null">
+                #{autho_id},
+            </if>
+        </trim>
+    </insert>
+
+    <!--根据角色id删除角色权限表的数据-->
+    <delete id="deleRoleAuthorityById" parameterType="Integer">
+        delete from hosp_role_authority
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                 role_id =#{id}
+            </if>
+        </where>
+    </delete>
+
 </mapper>

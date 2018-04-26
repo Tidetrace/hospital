@@ -58,8 +58,8 @@
     </select>
     <!--添加医生信息-->
     <insert id="saveDocAll" parameterType="DoctorModel">
-        INSERT INTO hosp_doctor(doctor_num,doctor_name,doctor_papers_type,doctor_papers_num,mobile,special_plane,sex,birthday,email,office_id,education,remark,creater,create_time)
-        VALUES (#{doctor_num},#{doctor_name},#{doctor_papers_type},#{doctor_papers_num},#{mobile},#{special_plane},#{sex},#{birthday},#{email},#{officeModel.id},#{education},#{remark},#{creater},#{create_time})
+        INSERT INTO hosp_doctor(doctor_num,doctor_name,doctor_papers_type,doctor_papers_num,pass_time,mobile,special_plane,sex,birthday,email,office_id,education,remark,creater,create_time)
+        VALUES (#{doctor_num},#{doctor_name},#{doctor_papers_type},#{doctor_papers_num},#{pass_time},#{mobile},#{special_plane},#{sex},#{birthday},#{email},#{officeModel.id},#{education},#{remark},#{creater},#{create_time})
     </insert>
 
     <!--修改医生信息-->
@@ -102,4 +102,12 @@
         </if>
         WHERE doctor_num = #{doctor_num}
     </update>
+    <delete id="delDoctorById" parameterType="Integer">
+        delete from hosp_doctor
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
 </mapper>

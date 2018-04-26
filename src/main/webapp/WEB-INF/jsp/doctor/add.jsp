@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: HYC
@@ -12,7 +13,8 @@
     <base href="${basePath}">
     <jsp:include page="docstyle.jsp"/>
     <jsp:include page="docscript.jsp"/>
-
+    <link href="http://g.alicdn.com/bui/bui/1.1.21/css/bs3/dpl.css" rel="stylesheet">
+    <link href="http://g.alicdn.com/bui/bui/1.1.21/css/bs3/bui.css" rel="stylesheet">
     <style type="text/css">
         body {
             padding-bottom: 40px;
@@ -77,7 +79,9 @@
         <tr>
             <td width="10%" class="tableleft">出生年月</td>
             <%--<td><input type="text" name="birthday" value=""/></td>--%>
-            <td><input size="16" type="text" name="Dom" value="" class="form_datetime"></td>
+            <td>
+                <input size="16px" type="text" class="calendar" name="Dom" value="" />
+            </td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">电子邮箱</td>
@@ -87,9 +91,10 @@
             <td width="10%" class="tableleft">所属科室</td>
             <td>
                 <select name="officeModel.id">
-                    <option value="1">急诊科</option>
-                    <option value="2">骨科</option>
-                    <option value="3">血液科</option>
+                    <option value="">请选择--</option>
+                    <c:forEach items="${office}" var="office">
+                        <option value="${office.id}">${office.office_name}</option>
+                    </c:forEach>
                 </select>
             </td>
         </tr>
@@ -128,6 +133,17 @@
                     alert(result.message);
                 }
             },'json')
+        });
+    });
+</script>
+<script src="assets/js/jquery-1.8.1.min.js"></script>
+<script src="assets/js/sea.js"></script>
+<script src="http://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+<script type="text/javascript">
+    BUI.use('bui/calendar',function(Calendar){
+        var datepicker = new Calendar.DatePicker({
+            trigger:'.calendar',
+            autoRender : true
         });
     });
 </script>

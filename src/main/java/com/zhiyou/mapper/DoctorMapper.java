@@ -21,4 +21,6 @@ public interface DoctorMapper {
     int updateDocParam(DoctorModel doctorModel);
     //根据id查询医生信息
     DoctorModel selectDocByParam(String param);
+    //根据id删除医生信息
+    int delDoctorById(Integer id);
 }

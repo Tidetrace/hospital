@@ -11,10 +11,7 @@ import com.zhiyou.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
@@ -58,8 +55,8 @@ public class RoleController extends BaseConstant{
     }
 
     /*
-    *@Derc:添加用户角色
-    */
+     *@Derc:添加用户角色
+     */
     @RequestMapping(value = "addSkip",method = RequestMethod.POST)
     public Object addSkips(Model model){
         List<AuthorityModel> authorityModels = authorityService.selectAuthorityAllByParam("");
@@ -94,14 +91,19 @@ public class RoleController extends BaseConstant{
             // 添加权限信息
             roleModel.setCreate_time(new Timestamp(new Date().getTime()));
             roleModel.setCreater(userModels.getUsername());
+            //给角色表添加角色信息
             int i = roleService.saveRoleById(roleModel);
-            String[] str = request.getParameterValues("authority_name");
-            for(String s:str){
-                System.out.println(s);
+            //从页面上获取所选择的权限信息
+            String[] strs = request.getParameterValues("authority_name");
+            int j = 0;
+            for(String str:strs){ //遍历，拿出每一个权限
+                System.out.println(str);
+                //根据每次拿到的权限id和角色id，添加信息到角色权限表
+                j = roleAuthorityService.saveRoleAuthorityById(str,roleModel.getId());
+                if(j<0){//判断是否添加成功
+                    break;
+                }
             }
-            System.out.println(">>>>>>>>>"+str);
-            System.out.println("????????????为："+i+";"+roleModel.getId());
-            int j = roleAuthorityService.saveRoleAuthorityById(str,roleModel.getId());
             if(i>0&&j>0){
                 map.put(MESSAGE,true);
             }else {
@@ -112,6 +114,17 @@ public class RoleController extends BaseConstant{
         return map;
     }
 
-
+    /*
+     *@Derc:根据角色删除信息
+     */
+    @RequestMapping(value = "delRoleByRoleId/{id}")
+    public Object delRoleById(@PathVariable Integer id){
+        int i = roleService.delRoleById(id);
+        if(i>0){
+            return "redirect:/role/roleIndex.do";
+        }else {
+            return "error404";
+        }
+    }
 
 }

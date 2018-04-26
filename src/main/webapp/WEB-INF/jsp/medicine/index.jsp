@@ -94,8 +94,8 @@
 
             <td colspan="4">
                 <center>
-                    <button type="submit" class="btn btn-primary" type="button">查询</button>
-                    <button type="submit" class="btn btn-primary" type="button">清空</button>
+                    <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
+                    <button type="reset" class="btn btn-success" type="button">清空</button>
                 </center>
             </td>
         </tr>
@@ -115,40 +115,40 @@
         <th>操作</th>
     </tr>
     </thead>
- <c:choose>
-     <c:when test="${not empty drug}">
-         <c:forEach var="drug" items="${drug}">
-             <tr >
-                 <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-                 <td style="vertical-align:middle;">${drug.drug_num}</td>
-                 <td style="vertical-align:middle;">${drug.drug_name}</td>
-                 <td style="vertical-align:middle;">
-                     <c:choose>
-                         <c:when test="${drug.drug_type==0}">中药</c:when>
-                         <c:when test="${drug.drug_type==1}">西药</c:when>
-                         <c:when test="${drug.drug_type==2}">处方</c:when>
-                         <c:otherwise>非处方</c:otherwise>
-                     </c:choose>
-                 </td>
-                 <td style="vertical-align:middle;">${drug.drug_desc}</td>
-                 <td style="vertical-align:middle;">
-                     <c:choose>
-                         <c:when test="${drug.status==0}">已下架</c:when>
-                         <c:when test="${drug.status==1}">销售中</c:when>
-                         <c:otherwise>已卖完</c:otherwise>
-                     </c:choose>
-                 </td>
-                 <td style="vertical-align:middle;">${drug.surplus}袋</td>
-                 <td style="vertical-align:middle;"><a href="/drug/editSkip.do?drugNum=${drug.drug_num}">更改</a>&nbsp;&nbsp;&nbsp;<a href="/drug/drugDetails.do?drugNum=${drug.drug_num}">详情>>></a></td>
-             </tr>
-         </c:forEach>
-     </c:when>
-     <c:otherwise>
-         <tr>
-             <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
-         </tr>
-     </c:otherwise>
- </c:choose>
+    <c:choose>
+        <c:when test="${not empty drug}">
+            <c:forEach var="drug" items="${drug}">
+                <tr >
+                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
+                    <td style="vertical-align:middle;">${drug.drug_num}</td>
+                    <td style="vertical-align:middle;">${drug.drug_name}</td>
+                    <td style="vertical-align:middle;">
+                        <c:choose>
+                            <c:when test="${drug.drug_type==0}">中药</c:when>
+                            <c:when test="${drug.drug_type==1}">西药</c:when>
+                            <c:when test="${drug.drug_type==2}">处方</c:when>
+                            <c:otherwise>非处方</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td style="vertical-align:middle;">${drug.drug_desc}</td>
+                    <td style="vertical-align:middle;">
+                        <c:choose>
+                            <c:when test="${drug.status==0}">已下架</c:when>
+                            <c:when test="${drug.status==1}">销售中</c:when>
+                            <c:otherwise>已卖完</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td style="vertical-align:middle;">${drug.surplus}袋</td>
+                    <td style="vertical-align:middle;"><a href="/drug/editSkip.do?drugNum=${drug.drug_num}">更改</a>&nbsp;&nbsp;&nbsp;<a href="/drug/drugDetails.do?drugNum=${drug.drug_num}">详情>>></a></td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
 
 </table>
 
@@ -169,7 +169,6 @@
             <div>
                 <button type="button" class="btn btn-success" id="newNav">添加新药</button>
                 <button type="button" class="btn btn-success" id="delPro">导出Excel</button>
-                <button type="button" class="btn btn-success" id="delPro">导出txt</button>
             </div>
 
         </th>

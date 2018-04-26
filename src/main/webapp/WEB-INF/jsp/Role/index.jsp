@@ -103,7 +103,7 @@
                             <c:otherwise>禁用</c:otherwise>
                         </c:choose>
                     </td>
-                    <td><a href="editRole.html">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:alert('删除成功！');">删除</a> </td>
+                    <td><a href="editRole.html">编辑</a>&nbsp;&nbsp;&nbsp;<a href="/role/delRoleByRoleId/${role.id}.do" onclick="if(confirm('确定删除?')==false)return false;">删除</a> </td>
                 </tr>
             </c:forEach>
         </c:when>

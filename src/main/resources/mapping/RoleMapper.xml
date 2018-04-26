@@ -69,4 +69,12 @@
         </trim>
     </insert>
 
+    <delete id="delRoleById" parameterType="Integer">
+        delete from hosp_role
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                id = #{id}
+            </if>
+        </where>
+    </delete>
 </mapper>

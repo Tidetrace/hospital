@@ -14,4 +14,6 @@ public interface RoleService {
     List<RoleModel> selectRoleAllByParam(String role_name);
     //添加角色信息
     int saveRoleById(RoleModel roleModel);
+    //根据Id删除角色，在此之前判断角色权限表是否存在
+    int delRoleById(Integer id);
 }
