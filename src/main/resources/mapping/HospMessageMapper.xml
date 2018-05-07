@@ -22,7 +22,7 @@
         select * from hosp_inhospital_message
         <where>
             <if test="_parameter!=null and _parameter!=''">
-                regist_num = #{regNum}
+                regist_num like concat('%',#{regNum},'%')
             </if>
         </where>
     </select>

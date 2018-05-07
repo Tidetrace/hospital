@@ -22,6 +22,7 @@ public class OnlinePillsModel {
     private Timestamp create_time;
     private String updater;
     private Timestamp update_time;
+
     public Integer getId() {
         return id;
     }

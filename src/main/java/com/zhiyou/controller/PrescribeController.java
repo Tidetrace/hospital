@@ -1,8 +1,11 @@
 package com.zhiyou.controller;
 
 import com.zhiyou.model.DrugModel;
+import com.zhiyou.model.OnlinePillsModel;
 import com.zhiyou.model.RegistinfoModel;
+import com.zhiyou.model.UserModel;
 import com.zhiyou.service.MedicineService;
+import com.zhiyou.service.PrescribeService;
 import com.zhiyou.service.RegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * @author HYC
@@ -24,11 +26,13 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/pres",method = {RequestMethod.GET,RequestMethod.POST})
-public class PrescribeController {
+public class PrescribeController extends BaseConstant {
     @Autowired
     private RegistrationService registrationService;
     @Autowired
     private MedicineService medicineService;
+    @Autowired
+    private PrescribeService prescribeService;
 
     /**
      * Derc: 跳转到医生开药界面
@@ -61,21 +65,49 @@ public class PrescribeController {
 
 
     /*
-    *@Derc:医生发药
-    */
+     *@Derc:医生发药
+     */
     @ResponseBody
-    @RequestMapping(value = "addPillsAll",method = RequestMethod.POST)
-    public Object sendPills(@RequestParam String regNum, HttpServletRequest request){
-        System.out.println("挂号编号："+regNum);
-        String[] strings = request.getParameterValues("drugNum");
-        System.out.println("全部药品："+strings);
-        for (String s: strings
-             ) {
-            System.out.println(">>>>>"+s);
-        }
-
+    @RequestMapping(value = "addPillsAll")
+    public Object sendPills(@RequestParam("regNum") String regNum,
+                            @RequestParam String[] arr_gros,
+                            @RequestParam String[] arr_drug,
+                            OnlinePillsModel onlinePillsModel,
+                            HttpServletRequest request){
+        //定义发药数量为0
+        int pills_send = 0;
+        int m = 0;
+        UserModel user = (UserModel)request.getSession().getAttribute("user");
         Map map = new HashMap();
+        System.out.println("挂号编号："+regNum);
+        for(int i=0;i<arr_drug.length;i++){
+            for(int j=0;j<arr_gros.length;j++){
+                if(arr_drug[i]!=""&&arr_gros[i]!=""&&arr_drug[i]!=null&&arr_gros[i]!=null&&i==j){
+                    System.out.println("编号："+arr_drug[i]+":"+arr_gros[j]);
+                    System.out.println("aaa"+regNum);
+                    //查询是否已经有发药记录
+                    OnlinePillsModel onlinePills = prescribeService.selectAllByParams(regNum,arr_drug[i]);
+                    //如果查询到有
+                    if(onlinePills!=null){
+                        //执行修改
+                        m = prescribeService.updateOnlinePills(regNum,arr_drug[i],(onlinePills.getPills_num()+Integer.parseInt(arr_gros[i])),(pills_send+onlinePills.getPills_send()), new Timestamp(new Date().getTime()), user.getUsername());
 
+                    }else {
+                        //添加数据
+                        m = prescribeService.saveOnlinePills(regNum, pills_send, Integer.parseInt(arr_gros[j]), arr_drug[i], new Timestamp(new Date().getTime()), user.getUsername());
+                    }
+                    if(m>0){
+                        if(i>0) {
+                            map.put(MESSAGE, true);
+                            map.put(ERROR,"医生开药成功！");
+                        }else {
+                            map.put(MESSAGE,false);
+                            map.put(ERROR,"医生开药失败！");
+                        }
+                    }
+                }
+            }
+        }
         return map;
     }
 

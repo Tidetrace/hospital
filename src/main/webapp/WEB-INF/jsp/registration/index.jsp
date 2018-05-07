@@ -84,13 +84,19 @@
             <td><input type="text" name="doctorModel.doctor_name" value=""/></td>
 
             <td width="10%" class="tableleft">科室：</td>
-            <td><input type="text" name="officeModel.office_name" value=""/></td>
+            <td>
+                <select name="officeModel.office_name">
+                    <option value="">请选择--</option>
+                    <c:forEach var="office" items="${office}">
+                        <option value="${office.office_name}">${office.office_name}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr>
             <td colspan="6" style="text-align: center;vertical-align: middle">
-                <button type="submit" class="btn btn-primary" type="button">查询</button>
-                &nbsp; &nbsp; &nbsp; &nbsp;
-                <button type="button" class="btn btn-primary" type="button">清空</button>
+                <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
+                <button type="reset" class="btn btn-success" type="button">清空</button>
             </td>
         </tr>
     </table>
@@ -112,32 +118,32 @@
         <c:when test="${not empty reg}">
             <c:forEach items="${reg}" var="reg">
                 <tr >
-                <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-                <td style="vertical-align:middle;">${reg.regist_num}</td>
-                <td style="vertical-align:middle;">${reg.regist_name}</td>
-                <td style="vertical-align:middle;"><f:formatDate value="${reg.create_time}" pattern="yyyy-MM-dd HH:ss:dd"/> </td>
-                <td style="vertical-align:middle;">${reg.officeModel.office_name}</td>
-                <td style="vertical-align:middle;">
-                    <c:choose>
-                        <c:when test="${reg.status==1}">已挂号</c:when>
-                        <c:when test="${reg.status==0}">已退号</c:when>
-                        <c:otherwise>已取号</c:otherwise>
-                    </c:choose>
-                </td>
-                   <%-- <td style="vertical-align:middle;">
+                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
+                    <td style="vertical-align:middle;">${reg.regist_num}</td>
+                    <td style="vertical-align:middle;">${reg.regist_name}</td>
+                    <td style="vertical-align:middle;"><f:formatDate value="${reg.create_time}" pattern="yyyy-MM-dd HH:ss:dd"/> </td>
+                    <td style="vertical-align:middle;">${reg.officeModel.office_name}</td>
+                    <td style="vertical-align:middle;">
+                        <c:choose>
+                            <c:when test="${reg.status==1}">已挂号</c:when>
+                            <c:when test="${reg.status==0}">已退号</c:when>
+                            <c:otherwise>已取号</c:otherwise>
+                        </c:choose>
+                    </td>
+                        <%-- <td style="vertical-align:middle;">
 
-                </td>--%>
+                     </td>--%>
                     <td style="vertical-align: middle">
-                            <a href="/reg/regDetails.do?regNum=${reg.regist_num}">详情>>></a>&nbsp;&nbsp;&nbsp;
-                            <a href="/reg/regEdit.do?regNum=${reg.regist_num}">更改</a>&nbsp;&nbsp;&nbsp;
-                            <a href="/reg/regDel.do?regNum=${reg.regist_num}">退号</a>&nbsp;&nbsp;&nbsp;
+                        <a href="/reg/regDetails.do?regNum=${reg.regist_num}">详情>>></a>&nbsp;&nbsp;&nbsp;
+                        <a href="/reg/regEdit.do?regNum=${reg.regist_num}" onclick="if(confirm('确定修改？')==false)return false;">更改</a>&nbsp;&nbsp;&nbsp;
+                        <a href="/reg/regDel.do?regNum=${reg.regist_num}" onclick="if(confirm('确定退号?')==false)return false;">退号</a>&nbsp;&nbsp;&nbsp;
                     </td>
                 </tr>
             </c:forEach>
         </c:when>
         <c:otherwise>
             <tr>
-            <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
+                <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
             </tr>
         </c:otherwise>
     </c:choose>
@@ -160,7 +166,6 @@
             <div><button type="button" class="btn btn-success" id="newNav">门诊挂号</button>&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-success" id="delPro" onClick="delAll();">退号</button>&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-success" id="export">导出Excel</button>
-                <button type="button" class="btn btn-success" id="print">打印</button>
             </div>
         </th>
     </tr>

@@ -2,6 +2,8 @@ package com.zhiyou.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhiyou.mapper.OfficeMapper;
+import com.zhiyou.model.OfficeModel;
 import com.zhiyou.model.RegistinfoModel;
 import com.zhiyou.model.UserModel;
 import com.zhiyou.service.RegistrationService;
@@ -32,7 +34,8 @@ import java.util.Map;
 public class RegistrationController extends BaseConstant{
     @Autowired
     private RegistrationService registrationService;
-
+    @Autowired
+    private OfficeMapper officeMapper;
     /**
      * Derc: 跳转到挂号信息页面
      */
@@ -42,9 +45,13 @@ public class RegistrationController extends BaseConstant{
                          @RequestParam(value ="officeModel.office_name",defaultValue = "") String officeName,
                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
                          Model model){
+        List<OfficeModel> officeModels = officeMapper.selectOfficeByAll("");
         PageHelper.startPage(pageNum,PAGESIZE);
         List<RegistinfoModel> registinfoModel = registrationService.selectRegAll(regNum,docName,officeName);
-        model.addAttribute("reg",registinfoModel);
+        if(officeModels!=null||registinfoModel!=null){
+            model.addAttribute("reg",registinfoModel);
+            model.addAttribute("office",officeModels);
+        }
         PageInfo<RegistinfoModel> pages = new PageInfo<RegistinfoModel>(registinfoModel);
         model.addAttribute("page",pages);
         return "/registration/index";

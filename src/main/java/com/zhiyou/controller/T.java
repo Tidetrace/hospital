@@ -1,12 +1,12 @@
-/*
+
 package com.zhiyou.controller;
 
-*/
+
 /**
  * @author HYC
  * @date 2018/4/18 16:25
  * @About
- *//*
+ */
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,33 +25,23 @@ import javax.swing.JFileChooser;
 
 public class T {
     public static void main(String[] args) {
-        JFileChooser fileChooser = new JFileChooser(); // 创建打印作业
-        int state = fileChooser.showOpenDialog(null);
-        if (state == fileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile(); // 获取选择的文件
-            // 构建打印请求属性集
-            HashPrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-            // 设置打印格式，因为未确定类型，所以选择autosense
-            DocFlavor flavor = DocFlavor.INPUT_STREAM.AUTOSENSE;
-            // 查找所有的可用的打印服务
-            PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
-            // 定位默认的打印服务
-            PrintService defaultService = PrintServiceLookup
-                    .lookupDefaultPrintService();
-            // 显示打印对话框
-            PrintService service = ServiceUI.printDialog(null, 200, 200,
-                    printService, defaultService, flavor, pras);
-            if (service != null) {
-                try {
-                    DocPrintJob job = service.createPrintJob(); // 创建打印作业
-                    FileInputStream fis = new FileInputStream(file); // 构造待打印的文件流
-                    DocAttributeSet das = new HashDocAttributeSet();
-                    Doc doc = new SimpleDoc(fis, flavor, das);
-                    job.print(doc, pras);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        String[] a = {"","sg","df","","dd","dd","dd"};
+        String[] s = {"112","0","","","23","",""};
+
+
+      /*  for(int i =0;i<a.length;i++){
+           if(a[i]!=null&&a[i]!=""){
+               System.out.println(a[i]);
+           }
+        }*/
+
+        for(int i=0;i<a.length;i++){
+            for(int j=0;j<s.length;j++){
+                if(a[i]!=""&&s[i]!=""&&a[i]!=null&&s[i]!=null&&i==j){
+                    System.out.println("编号："+a[i]+":"+s[j]);
                 }
             }
         }
+
     }
-}*/
+}

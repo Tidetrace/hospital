@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhiyou.mapper.PrescribeMapper">
+
+    <!--查询发药表里面是否存在已经开药的记录了-->
+   <select id="selectAllByParams" parameterType="HashMap" resultType="OnlinePillsModel">
+       select * from online_pills
+       <where>
+           <if test="regNum!=null">
+               regist_num = #{regNum}
+           </if>
+           <if test="drugNum!=null">
+              and drug_num = #{drugNum}
+           </if>
+       </where>
+   </select>
+
+    <!--医生开药-->
+    <insert id="saveOnlinePills" parameterType="OnlinePillsModel">
+        insert into online_pills
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="regNum!=null">
+                regist_num,
+            </if>
+            <if test="pills_num!=null">
+                pills_num,
+            </if>
+            <if test="pills_send!=null">
+                pills_send,
+            </if>
+            <if test="drugNum">
+                drug_num,
+            </if>
+            <if test="creater!=null">
+                creater,
+            </if>
+            <if test="create_time!=null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="regNum!=null">
+                #{regNum},
+            </if>
+            <if test="pills_num!=null">
+                #{pills_num},
+            </if>
+            <if test="pills_send!=null">
+                #{pills_send},
+            </if>
+            <if test="drugNum">
+                #{drugNum},
+            </if>
+            <if test="creater!=null">
+                #{creater},
+            </if>
+            <if test="create_time!=null">
+                #{create_time},
+            </if>
+        </trim>
+    </insert>
+
+    <!--如果有药品信息，则更改对应的药品数量-->
+    <update id="updateOnlinePills" parameterType="HashMap">
+        update online_pills
+        <trim prefix="set" suffixOverrides="," suffix=" where regist_num = #{regNum} and drug_num = #{drugNum} ">
+
+            <if test="pills_num != null"> pills_num=#{pills_num} , </if>
+
+            <if test="pills_send != null"> pills_send=#{pills_send} ,  </if>
+
+            <if test="updater != null and updater.length()>0"> updater=#{updater} ,  </if>
+
+            <if test="update_time != null"> update_time=#{update_time} ,  </if>
+        </trim>
+    </update>
+</mapper>

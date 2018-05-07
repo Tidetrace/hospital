@@ -24,6 +24,7 @@
                 id = #{role_id}
             </if>
         </where>
+        and state = 1
     </select>
 
     <!--查询角色所有信息 分页模糊查询-->

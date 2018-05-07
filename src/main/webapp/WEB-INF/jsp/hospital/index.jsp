@@ -80,8 +80,8 @@
             <td width="10%" class="tableleft">病例号：</td>
             <td><input type="text" name="regNum" value=""/></td>
             <td>
-                <button type="submit" class="btn btn-primary" type="button">查询</button>
-                <button type="submit" class="btn btn-primary" type="button">清空</button>
+                <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
+                <button type="reset" class="btn btn-success" type="button">清空</button>
             </td>
         </tr>
     </table>
