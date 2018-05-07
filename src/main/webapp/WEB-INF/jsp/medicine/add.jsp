@@ -12,6 +12,8 @@
     <base href="${basePath}">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
+    <link href="http://g.alicdn.com/bui/bui/1.1.21/css/bs3/dpl.css" rel="stylesheet">
+    <link href="http://g.alicdn.com/bui/bui/1.1.21/css/bs3/bui.css" rel="stylesheet">
     <style type="text/css">
         body {
             padding-bottom: 40px;
@@ -76,7 +78,9 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">生产日期</td>
-            <td><input type="text" name="Dom" value=""/></td>
+            <td>
+                <input size="16px" type="text" class="calendar" name="Dom" value="" />
+            </td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">保质期</td>
@@ -125,6 +129,18 @@
                     alert(result.message);
                 }
             },'json')
+        });
+    });
+</script>
+
+<script src="assets/js/jquery-1.8.1.min.js"></script>
+<script src="assets/js/sea.js"></script>
+<script src="http://g.alicdn.com/bui/bui/1.1.21/config.js"></script>
+<script type="text/javascript">
+    BUI.use('bui/calendar',function(Calendar){
+        var datepicker = new Calendar.DatePicker({
+            trigger:'.calendar',
+            autoRender : true
         });
     });
 </script>

@@ -64,7 +64,24 @@
             }
             if(ids.length>0){
                 if(confirm("确认操作?")){
-                    alert("成功!");
+                    //声明list
+                    var _list = [];
+                    //把每一个选中的，放入string对象
+                    $("input[name='check']:checked").each(function (i) {
+                        if($(this).prop('checked')){
+                            _list[i]=$(this).val();
+                        }
+                    });
+                    $.ajax({
+                        url : '/reg/outRegByAllParams.do',
+                        data : "list="+_list,
+                        type : "POST",
+                        dataType:'json',
+                        success : function(data) {
+                            alert(data.error);
+                            window.location.reload();
+                        }
+                    });
                 }
             }else{
                 alert("请选中要操作的项");
@@ -96,7 +113,7 @@
         <tr>
             <td colspan="6" style="text-align: center;vertical-align: middle">
                 <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
-                <button type="reset" class="btn btn-success" type="button">清空</button>
+                <button type="reset" class="btn btn-success" type="button"><img src="Images/qingkong.png" width="13px" height="13px">&nbsp;清空</button>
             </td>
         </tr>
     </table>
@@ -105,48 +122,82 @@
 <table class="table table-bordered table-hover definewidth m10">
     <thead>
     <tr>
-        <th><input type="checkbox" id="checkall" onChange="checkall();"></th>
-        <th>门诊编号</th>
-        <th>病号姓名</th>
-        <th>挂号时间</th>
-        <th>挂号科室</th>
-        <th>状态</th>
-        <th>操作</th>
+        <th width="2%"><input type="checkbox" id="checkall" onChange="checkall();"></th>
+        <th width="10%">门诊编号</th>
+        <th width="8%">病号姓名</th>
+        <th width="15%">挂号时间</th>
+        <th width="8%">挂号科室</th>
+        <th width="10%">状态</th>
+        <th width="15%">操作</th>
     </tr>
     </thead>
-    <c:choose>
-        <c:when test="${not empty reg}">
-            <c:forEach items="${reg}" var="reg">
-                <tr >
-                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-                    <td style="vertical-align:middle;">${reg.regist_num}</td>
-                    <td style="vertical-align:middle;">${reg.regist_name}</td>
-                    <td style="vertical-align:middle;"><f:formatDate value="${reg.create_time}" pattern="yyyy-MM-dd HH:ss:dd"/> </td>
-                    <td style="vertical-align:middle;">${reg.officeModel.office_name}</td>
-                    <td style="vertical-align:middle;">
-                        <c:choose>
-                            <c:when test="${reg.status==1}">已挂号</c:when>
-                            <c:when test="${reg.status==0}">已退号</c:when>
-                            <c:otherwise>已取号</c:otherwise>
-                        </c:choose>
-                    </td>
-                        <%-- <td style="vertical-align:middle;">
+    <c:if test="${user.is_admin==1}">
+        <c:choose>
+            <c:when test="${not empty reg}">
+                <c:forEach items="${reg}" var="reg">
+                    <tr >
+                        <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${reg.id}"></td>
+                        <td style="vertical-align:middle;">${reg.regist_num}</td>
+                        <td style="vertical-align:middle;">${reg.regist_name}</td>
+                        <td style="vertical-align:middle;"><f:formatDate value="${reg.create_time}" pattern="yyyy-MM-dd HH:ss:dd"/> </td>
+                        <td style="vertical-align:middle;">${reg.officeModel.office_name}</td>
+                        <td style="vertical-align:middle;">
+                            <c:choose>
+                                <c:when test="${reg.status==1}">已挂号</c:when>
+                                <c:when test="${reg.status==0}">已退号</c:when>
+                                <c:otherwise>已取号</c:otherwise>
+                            </c:choose>
+                        </td>
+                            <%-- <td style="vertical-align:middle;">
 
-                     </td>--%>
-                    <td style="vertical-align: middle">
-                        <a href="/reg/regDetails.do?regNum=${reg.regist_num}">详情>>></a>&nbsp;&nbsp;&nbsp;
-                        <a href="/reg/regEdit.do?regNum=${reg.regist_num}" onclick="if(confirm('确定修改？')==false)return false;">更改</a>&nbsp;&nbsp;&nbsp;
-                        <a href="/reg/regDel.do?regNum=${reg.regist_num}" onclick="if(confirm('确定退号?')==false)return false;">退号</a>&nbsp;&nbsp;&nbsp;
-                    </td>
+                         </td>--%>
+                        <td style="vertical-align: middle">
+                            <a href="/reg/regDetails.do?regNum=${reg.regist_num}">详情>>></a>&nbsp;&nbsp;&nbsp;
+                            <a href="/reg/regEdit.do?regNum=${reg.regist_num}" onclick="if(confirm('确定修改？')==false)return false;">更改</a>&nbsp;&nbsp;&nbsp;
+                            <a href="/reg/regDel.do?regNum=${reg.regist_num}" onclick="if(confirm('确定退号?')==false)return false;">退号</a>&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr>
+                    <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
                 </tr>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-            <tr>
-                <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
-            </tr>
-        </c:otherwise>
-    </c:choose>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
+    <c:if test="${user.is_admin==0}">
+        <c:choose>
+            <c:when test="${not empty reg_common}">
+                <c:forEach items="${reg_common}" var="reg">
+                    <tr >
+                        <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
+                        <td style="vertical-align:middle;">${reg.regist_num}</td>
+                        <td style="vertical-align:middle;">${reg.regist_name}</td>
+                        <td style="vertical-align:middle;"><f:formatDate value="${reg.create_time}" pattern="yyyy-MM-dd HH:ss:dd"/> </td>
+                        <td style="vertical-align:middle;">${reg.officeModel.office_name}</td>
+                        <td style="vertical-align:middle;">
+                            <c:choose>
+                                <c:when test="${reg.status==1}">已挂号</c:when>
+                                <c:when test="${reg.status==0}">已退号</c:when>
+                                <c:otherwise>已取号</c:otherwise>
+                            </c:choose>
+                        </td>
+                        <td style="vertical-align: middle">
+                            <a href="/reg/regDetails.do?regNum=${reg.regist_num}">详情>>></a>&nbsp;&nbsp;&nbsp;
+                            <a href="/reg/regEdit.do?regNum=${reg.regist_num}" onclick="if(confirm('确定修改？')==false)return false;">更改</a>&nbsp;&nbsp;&nbsp;
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr>
+                    <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
+                </tr>
+            </c:otherwise>
+        </c:choose>
+    </c:if>
+
 </table>
 
 <table class="table table-bordered table-hover definewidth m10" >
@@ -163,9 +214,11 @@
                 </c:if>
                 &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
             </div>
-            <div><button type="button" class="btn btn-success" id="newNav">门诊挂号</button>&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-success" id="delPro" onClick="delAll();">退号</button>&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-success" id="export">导出Excel</button>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Images/out-patient registration.png" width="30px" height="30px" id="newNav">&nbsp;&nbsp;&nbsp;
+                <c:if test="${user.is_admin==1}">
+                    <img src="Images/back_num.png" id="delPro" width="30px" height="30px" onClick="delAll();">&nbsp;&nbsp;&nbsp;
+                </c:if>
+                <img src="Images/out_excel.png" id="export" width="25px" height="25px">&nbsp;&nbsp;&nbsp;
             </div>
         </th>
     </tr>

@@ -38,36 +38,6 @@
                 window.location.href="dispensing-gives.html";
             });
         });
-
-        function checkall(){
-            var alls=document.getElementsByName("check");
-            var ch=document.getElementById("checkall");
-            if(ch.checked){
-                for(var i=0;i<alls.length;i++){
-                    alls[i].checked=true;
-                }
-            }else{
-                for(var i=0;i<alls.length;i++){
-                    alls[i].checked=false;
-                }
-            }
-        }
-        function delAll(){
-            var alls=document.getElementsByName("check");
-            var ids=new Array();
-            for(var i=0;i<alls.length;i++){
-                if(alls[i].checked){
-                    ids.push(alls[i].value);
-                }
-            }
-            if(ids.length>0){
-                if(confirm("确认操作?")){
-                    alert("成功!");
-                }
-            }else{
-                alert("请选中要操作的项");
-            }
-        }
     </script>
 </head>
 <body>
@@ -88,14 +58,13 @@
     </table>
 </form>
 
-<table class="table table-bordered table-hover definewidth m10" >
+<table class="table table-bordered table-hover definewidth m10">
     <thead>
     <tr>
-        <th><input type="checkbox" id="checkall" onChange="checkall();"></th>
-        <th>病历号</th>
-        <th>姓名</th>
-        <th>负责人</th>
-        <th>操作</th>
+        <th width="25%">病历号</th>
+        <th width="25%">姓名</th>
+        <th width="25%">负责人</th>
+        <th width="25%">操作</th>
     </tr>
     </thead>
 
@@ -103,7 +72,6 @@
         <c:when test="${ not empty pills}">
             <c:forEach var="pills" items="${pills}">
                 <tr >
-                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
                     <td style="vertical-align:middle;">${pills.registinfoModel.regist_num}</td>
                     <td style="vertical-align:middle;">${pills.registinfoModel.regist_name}</td>
                     <td style="vertical-align:middle;">${pills.creater}</td>
@@ -133,11 +101,8 @@
                 </c:if>
                 &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
             </div>
-            <div><button type="button" class="btn btn-success" id="newNav">发药</button>
-
-            </div>
-
-        </th></tr>
+        </th>
+    </tr>
 </table>
 </body>
 </html>

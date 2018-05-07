@@ -56,7 +56,7 @@
 <body>
 <div class="container">
 
-    <form class="form-signin" id="loginForm" method="post" action="">
+    <form class="form-signin" id="loginForm" onsubmit="return false;" method="post" action="">
         <h2 class="form-signin-heading">&nbsp;&nbsp;&nbsp;登录系统</h2>
         <input type="text" name="username" class="input-block-level" placeholder="账号">
         <input type="password" name="password" class="input-block-level" placeholder="密码">
@@ -69,24 +69,32 @@
         <p>
 
         </p>
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-large btn-primary" type="button" id="bt_lon">登录</button></p>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button class="btn btn-large btn-primary" type="submit" onclick="loginIn()" id="bt_lon">登录</button></p>
     </form>
 </div>
 <!-- 触发JS刷新-->
 <script type="text/javascript" src="Js/jquery.js"></script>
 <script>
-    $(function () {
-        $('#bt_lon').click(function () {
-            $.post('user/loginIn.do',$('#loginForm').serialize(),function (result) {
-                if(result.message){
-                    window.location.href="index.do";
-                }else {
-                    alert(result.error);
-                    window.location.href="user/login.do";
-                }
-           },'json');
-        });
-    })
+   //聚焦
+   $(function () {
+       $("input[name='username']").focus();
+   })
+    function loginIn() {
+        if(false){
+            return false;
+        }else {
+            $('#loginForm').submit(function () {
+                $.post('user/loginIn.do',$('#loginForm').serialize(),function (result) {
+                    if(result.message){
+                        window.location.href="index.do";
+                    }else {
+                        alert(result.error);
+                        window.location.href="user/login.do";
+                    }
+                },'json');
+            });
+        }
+    }
 </script>
 <script type="text/javascript">
     function changeImg(){

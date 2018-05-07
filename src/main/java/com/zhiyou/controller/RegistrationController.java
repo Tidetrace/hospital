@@ -44,17 +44,34 @@ public class RegistrationController extends BaseConstant{
                          @RequestParam(value ="doctorModel.doctor_name",defaultValue = "") String docName,
                          @RequestParam(value ="officeModel.office_name",defaultValue = "") String officeName,
                          @RequestParam(value = "pageNum",defaultValue = "1") Integer pageNum,
+                         HttpServletRequest request,
                          Model model){
+        UserModel users = (UserModel) request.getSession().getAttribute("user");
         List<OfficeModel> officeModels = officeMapper.selectOfficeByAll("");
-        PageHelper.startPage(pageNum,PAGESIZE);
-        List<RegistinfoModel> registinfoModel = registrationService.selectRegAll(regNum,docName,officeName);
-        if(officeModels!=null||registinfoModel!=null){
-            model.addAttribute("reg",registinfoModel);
-            model.addAttribute("office",officeModels);
+        if(users.getIs_admin()==1) {
+            PageHelper.startPage(pageNum, PAGESIZE);
+            List<RegistinfoModel> registinfoModel = registrationService.selectRegAll(regNum, docName, officeName);
+            if(officeModels!=null||registinfoModel!=null){
+                model.addAttribute("reg",registinfoModel);
+                model.addAttribute("office",officeModels);
+            }
+            PageInfo<RegistinfoModel> pages = new PageInfo<RegistinfoModel>(registinfoModel);
+            model.addAttribute("page",pages);
+            return "/registration/index";
+        }else if(users.getIs_admin()==0){
+            PageHelper.startPage(pageNum, PAGESIZE);
+            List<RegistinfoModel> registById = registrationService.selectRegAllByCommonUser(regNum, docName, officeName,users.getUsername());
+            if(officeModels!=null||registById!=null){
+                model.addAttribute("reg_common",registById);
+                model.addAttribute("office",officeModels);
+            }
+            PageInfo<RegistinfoModel> pages = new PageInfo<RegistinfoModel>(registById);
+            model.addAttribute("page",pages);
+
+            return "/registration/index";
+        }else {
+            return "error404";
         }
-        PageInfo<RegistinfoModel> pages = new PageInfo<RegistinfoModel>(registinfoModel);
-        model.addAttribute("page",pages);
-        return "/registration/index";
     }
     /**
      * Derc: 挂号信息的某条记录详情查询
@@ -141,4 +158,24 @@ public class RegistrationController extends BaseConstant{
         }
         return map;
     }
+
+    /*
+    *@Derc:批量退号
+    */
+    @RequestMapping(value = "outRegByAllParams",method = RequestMethod.POST)
+    @ResponseBody
+    public Object ajaxList(@RequestParam("list")List<String> strList){
+        System.out.println("金俩了。。。。");
+        Map map = new HashMap();
+        int i = registrationService.updateRegByListParams(strList);
+        if(i>0){
+            map.put(MESSAGE,true);
+            map.put(ERROR,"退号成功！");
+        }else {
+            map.put(MESSAGE,false);
+            map.put(ERROR,"退号失败！");
+        }
+        return map;
+    }
+
 }

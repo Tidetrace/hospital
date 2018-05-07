@@ -6,6 +6,7 @@
         <id property="id" column="id"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="is_admin" property="is_admin"/>
         <result column="real_name" property="real_name"/>
         <result column="email" property="email"/>
         <result column="state" property="state"/>
@@ -91,6 +92,9 @@
             <if test="roleModel.id != null" >
                 role_id,
             </if>
+            <if test="is_admin!=null">
+                is_admin,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="username != null" >
@@ -116,6 +120,9 @@
             </if>
             <if test="roleModel.id != null" >
                 #{roleModel.id},
+            </if>
+            <if test="is_admin!=null">
+                1
             </if>
         </trim>
     </insert>

@@ -85,7 +85,7 @@
     用户名称：
     <input type="text" name="username" id="username"class="abc input-default" placeholder="" value="">&nbsp;&nbsp;
     <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
-    <button type="reset" class="btn btn-success" type="button">清空</button>
+    <button type="reset" class="btn btn-success" type="button"><img src="Images/qingkong.png" width="13px" height="13px">&nbsp;清空</button>
 </form>
 <table class="table table-bordered table-hover definewidth m10">
     <thead>
@@ -134,7 +134,11 @@
                 &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
             </div>
             <div>
-                <button type="button" class="btn btn-success" id="newNav">添加用户</button>&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-success" id="delPro" onClick="delAll();">删除选中</button></div></th></tr>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Images/add_user.png" width="30px" height="30px" id="newNav">&nbsp;&nbsp;&nbsp;
+                <img src="Images/del_user.png" width="30px" height="30px" id="delPro" onClick="delAll()">&nbsp;&nbsp;&nbsp;
+            </div>
+        </th>
+    </tr>
 </table>
 </body>
 </html>

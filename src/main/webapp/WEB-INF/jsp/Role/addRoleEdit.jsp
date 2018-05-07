@@ -87,7 +87,7 @@
         });
 
         $('#backid').click(function(){
-            window.location.href="";
+            window.location.href="role/roleIndex.do";
         });
 
 

@@ -47,4 +47,19 @@ public class RegistrationServiceImpl implements RegistrationService {
     public int updateRegByRegNum(RegistinfoModel registinfoModel) {
         return registrationMapper.updateRegByRegNum(registinfoModel);
     }
+
+    @Override
+    public List<RegistinfoModel> selectRegAllByCommonUser(String regNum, String docName, String officeName,  String username) {
+        HashMap map = new HashMap();
+        map.put("regNum",regNum);
+        map.put("docName",docName);
+        map.put("officeName",officeName);
+        map.put("username",username);
+        return registrationMapper.selectRegAllByCommonUser(map);
+    }
+
+    @Override
+    public int updateRegByListParams(List<String> strList) {
+        return registrationMapper.updateRegByListParams(strList);
+    }
 }

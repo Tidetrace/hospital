@@ -95,7 +95,7 @@
             <td colspan="4">
                 <center>
                     <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
-                    <button type="reset" class="btn btn-success" type="button">清空</button>
+                    <button type="reset" class="btn btn-success" type="button"><img src="Images/qingkong.png" width="13px" height="13px">&nbsp;清空</button>
                 </center>
             </td>
         </tr>
@@ -109,7 +109,7 @@
         <th>药品编号</th>
         <th>药品名称</th>
         <th>药品类型</th>
-        <th>简单描述</th>
+        <th width: 15%;>简单描述</th>
         <th>状态</th>
         <th>剩余量</th>
         <th>操作</th>
@@ -118,11 +118,11 @@
     <c:choose>
         <c:when test="${not empty drug}">
             <c:forEach var="drug" items="${drug}">
-                <tr >
-                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="1"></td>
-                    <td style="vertical-align:middle;">${drug.drug_num}</td>
-                    <td style="vertical-align:middle;">${drug.drug_name}</td>
-                    <td style="vertical-align:middle;">
+                <tr>
+                    <td style="width: 2%;overflow: hidden;word-break:keep-all;"><input type="checkbox" name="check" value="1"></td>
+                    <td style="width: 10%;overflow: hidden;word-break:keep-all;">${drug.drug_num}</td>
+                    <td style="width: 10%;overflow: hidden;word-break:keep-all;">${drug.drug_name}</td>
+                    <td style="width: 8%;overflow: hidden;word-break:keep-all;">
                         <c:choose>
                             <c:when test="${drug.drug_type==0}">中药</c:when>
                             <c:when test="${drug.drug_type==1}">西药</c:when>
@@ -130,16 +130,21 @@
                             <c:otherwise>非处方</c:otherwise>
                         </c:choose>
                     </td>
-                    <td style="vertical-align:middle;">${drug.drug_desc}</td>
-                    <td style="vertical-align:middle;">
+                    <td style="width: 20%;overflow: hidden;word-break:keep-all;">${drug.drug_desc}</td>
+                    <td  style="width: 8%;overflow: hidden;word-break:keep-all;">
                         <c:choose>
                             <c:when test="${drug.status==0}">已下架</c:when>
                             <c:when test="${drug.status==1}">销售中</c:when>
                             <c:otherwise>已卖完</c:otherwise>
                         </c:choose>
                     </td>
-                    <td style="vertical-align:middle;">${drug.surplus}袋</td>
-                    <td style="vertical-align:middle;"><a href="/drug/editSkip.do?drugNum=${drug.drug_num}">更改</a>&nbsp;&nbsp;&nbsp;<a href="/drug/drugDetails.do?drugNum=${drug.drug_num}">详情>>></a></td>
+                    <td  style="width: 3%;overflow: hidden;word-break:keep-all;">${drug.surplus}袋</td>
+                    <td  style="width: 15%;overflow: hidden;word-break:keep-all;">
+                        <c:if test="${user.is_admin==1}">
+                            <a href="/drug/editSkip.do?drugNum=${drug.drug_num}">更改</a>&nbsp;&nbsp;&nbsp;
+                        </c:if>
+                        <a href="/drug/drugDetails.do?drugNum=${drug.drug_num}">详情>>></a>
+                    </td>
                 </tr>
             </c:forEach>
         </c:when>
@@ -166,14 +171,14 @@
                 </c:if>
                 &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
             </div>
-            <div>
-                <button type="button" class="btn btn-success" id="newNav">添加新药</button>
-                <button type="button" class="btn btn-success" id="delPro">导出Excel</button>
-            </div>
+            <c:if test="${user.is_admin==1}">
+                <div>
+                    <button type="button" class="btn btn-success" id="newNav">添加新药</button>
+                </div>
+            </c:if>
 
         </th>
     </tr>
 </table>
-
 </body>
 </html>

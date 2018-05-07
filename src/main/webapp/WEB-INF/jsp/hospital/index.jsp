@@ -81,7 +81,7 @@
             <td><input type="text" name="regNum" value=""/></td>
             <td>
                 <button type="submit" class="btn btn-primary" type="button"><i class="icon-search icon-white"></i>搜索</button>
-                <button type="reset" class="btn btn-success" type="button">清空</button>
+                <button type="reset" class="btn btn-success" type="button"><img src="Images/qingkong.png" width="13px" height="13px">&nbsp;清空</button>
             </td>
         </tr>
     </table>
@@ -150,7 +150,6 @@
                 &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
             </div>
             <div><button type="button" class="btn btn-success" id="newNav">录入住院信息</button>&nbsp;&nbsp;&nbsp;
-                <button type="button" class="btn btn-success" id="delPro">导出Excel</button>
             </div>
 
         </th></tr>

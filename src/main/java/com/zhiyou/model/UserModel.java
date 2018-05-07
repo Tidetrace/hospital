@@ -12,6 +12,7 @@ public class UserModel implements Serializable {
 	private Integer id;
 	private String username;
 	private String password;
+	private Integer is_admin;
 	private String real_name;
 	private String email;
 	private Integer state;
@@ -88,6 +89,11 @@ public class UserModel implements Serializable {
 		this.roleModel = roleModel;
 	}
 
+	public Integer getIs_admin() {
+		return is_admin;
+	}
 
-
+	public void setIs_admin(Integer is_admin) {
+		this.is_admin = is_admin;
+	}
 }

@@ -121,4 +121,35 @@
             </if>
         </where>
     </update>
+    <!--普通人员登录，显示自己的挂号信息-->
+    <select id="selectRegAllByCommonUser" resultMap="regAll" parameterType="java.util.HashMap">
+        SELECT * FROM
+        hosp_registinfo as reg,
+        hosp_doctor as doc,
+        hosp_office as off
+        <where>
+            reg.office_id = off.id
+            AND
+            reg.doctor_id = doc.id
+            <if test="regNum!=''and regNum!=null">
+                AND  reg.regist_num = #{regNum}
+            </if>
+            <if test="docName!=null and docName!=''">
+                AND doc.doctor_name = #{docName}
+            </if>
+            <if test="officeName!=null and officeName!=''">
+                AND off.office_name = #{officeName}
+            </if>
+            <if test="username!=null">
+                and reg.creater = #{username}
+            </if>
+        </where>
+    </select>
+    <!--管理员批量退号-->
+    <update id="updateRegByListParams" parameterType="java.util.List">
+        UPDATE hosp_registinfo SET status = 0 WHERE id IN
+        <foreach collection="list" item="strList" index="index" open="(" separator="," close=")" >
+            ${strList}
+        </foreach>
+    </update>
 </mapper>

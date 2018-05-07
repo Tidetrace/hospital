@@ -42,7 +42,7 @@
 <body>
 <form id="regEdit" method="post" class="definewidth m20">
     <table class="table table-bordered table-hover definewidth m10">
-        <<input type="hidden" name="regist_num" value="${reg.regist_num}">
+        <input type="hidden" name="regist_num" value="${reg.regist_num}">
         <tr>
             <td width="10%" class="tableleft">姓名</td>
             <td><input type="text" name="regist_name" readonly value="${reg.regist_name}"/></td>
