@@ -79,12 +79,9 @@ public class PrescribeController extends BaseConstant {
         int m = 0;
         UserModel user = (UserModel)request.getSession().getAttribute("user");
         Map map = new HashMap();
-        System.out.println("挂号编号："+regNum);
-        for(int i=0;i<arr_drug.length;i++){
-            for(int j=0;j<arr_gros.length;j++){
-                if(arr_drug[i]!=""&&arr_gros[i]!=""&&arr_drug[i]!=null&&arr_gros[i]!=null&&i==j){
-                    System.out.println("编号："+arr_drug[i]+":"+arr_gros[j]);
-                    System.out.println("aaa"+regNum);
+        for(int i=0;i<arr_drug.length;i++){ //循环所有的药品编号数组
+            for(int j=0;j<arr_gros.length;j++){ //循环页面传来的药品数量数组
+                if(arr_drug[i]!=""&&arr_gros[i]!=""&&arr_drug[i]!=null&&arr_gros[i]!=null&&i==j){ //判断每一个选中的药品编号和对应的药品数量
                     //查询是否已经有发药记录
                     OnlinePillsModel onlinePills = prescribeService.selectAllByParams(regNum,arr_drug[i]);
                     //如果查询到有

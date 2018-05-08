@@ -10,6 +10,7 @@
         <result column="inho_end_time" property="inho_end_time"/>
         <result column="inho_medical_pay" property="inho_medical_pay"/>
         <result column="inho_drug_pay" property="inho_drug_pay"/>
+        <association property="registinfoModel" column="regist_num" select="com.zhiyou.mapper.RegistrationMapper.selectRegByParam" javaType="RegistinfoModel"/>
     </resultMap>
     <select id="selectOutHospByRegNum" resultMap="outHospMap" parameterType="String">
         select * from hosp_inhostipal_settle
@@ -22,7 +23,7 @@
     <update id="updateSetterHospByRegNum" parameterType="String">
         UPDATE hosp_inhostipal_settle
         <set>
-            inho_finall_status = 2
+            inho_finall_status = 0
         </set>
         <where>
             <if test="_parameter!=null and _parameter!=''">
@@ -32,4 +33,13 @@
     </update>
 
 
+    <!--查询最终结算信息-->
+    <select id="selectHospSettleByParam" parameterType="String" resultMap="outHospMap">
+      select * from hosp_inhostipal_settle
+      <where>
+          <if test="_parameter!=null and _parameter!=''">
+              regist_num = #{regNum}
+          </if>
+      </where>
+    </select>
 </mapper>

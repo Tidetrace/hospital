@@ -26,8 +26,8 @@ public class InhostipalSettleModel {
 	private Double inho_total_case;//总花费
 	private Double inho_cash;//押金
 	private Timestamp inho_end_time;
-	private Double inho_medical_pay;
-	private Double inho_drug_pay;
+	private Double inho_medical_pay;//住院花费
+	private Double inho_drug_pay;//药品
 	
 	//提供对应的get和set方法
 	@Id
