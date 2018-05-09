@@ -36,15 +36,18 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int delRoleById(Integer id) {
-        Set<RoleAuthorityModel> roleAuthorityModels = roleAuthorityMapper.selectByRoleAuthorityIdParam(id);
-        if(roleAuthorityModels!=null){
+        List<RoleAuthorityModel> roleAuthorityModels = roleAuthorityMapper.selectByRoleAuthorityIdParam(id);
+        if(!roleAuthorityModels.isEmpty()){
+            System.out.println("存在》》》》》》》"+id);
             int i = roleAuthorityMapper.deleRoleAuthorityById(id);
+            System.out.println("****值："+i);
             if(i>0){
                 return roleMapper.delRoleById(id);
             }else {
                 return 0;
             }
         }else {
+            System.out.println("NONONOO存在》》》》》》》"+id);
             return roleMapper.delRoleById(id);
         }
     }

@@ -17,53 +17,53 @@
 
 
     <%--页面信息校验--%>
-   <%-- <script>
-        $(function () {
-            $("#user_form").validate({
-                submitHandler : function(form) {  //验证通过后的执行方法
-                    //当前的form通过ajax方式提交（用到jQuery.Form文件）
-                    $(form).ajaxSubmit('/user/addUserss.do',$('#user_form').serialize(),function (result) {
-                        if(result.message){
-                            window.location.href="user/userIndex.do";
-                        }else {
-                            alert(result.error);
-                        }
-                    },'json');
-                },
-                debug:true, //调试模式，即使验证成功也不会跳转到目标页面
-                onkeyup:null, //当丢失焦点时才触发验证请求
-                rules: {
-                    username: {
-                        required: true,
-                        minlength: 2
-                    },
-                    password: {
-                        required: true,
-                        minlength: 6
-                    },
-                    real_name: {
-                        required: true,
-                        minlength: 2,
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    }
-                },
-                messages: {
-                    username: {
-                        required: "请输入用户名",
-                        minlength: "用户名必需由两个字母组成"
-                    },
-                    password: {
-                        required: "请输入密码",
-                        minlength: "密码长度不能小于 6 个字母"
-                    },
-                    email: "请输入一个正确的邮箱",
-                }
-            })
-        });
-    </script>--%>
+    <%-- <script>
+         $(function () {
+             $("#user_form").validate({
+                 submitHandler : function(form) {  //验证通过后的执行方法
+                     //当前的form通过ajax方式提交（用到jQuery.Form文件）
+                     $(form).ajaxSubmit('/user/addUserss.do',$('#user_form').serialize(),function (result) {
+                         if(result.message){
+                             window.location.href="user/userIndex.do";
+                         }else {
+                             alert(result.error);
+                         }
+                     },'json');
+                 },
+                 debug:true, //调试模式，即使验证成功也不会跳转到目标页面
+                 onkeyup:null, //当丢失焦点时才触发验证请求
+                 rules: {
+                     username: {
+                         required: true,
+                         minlength: 2
+                     },
+                     password: {
+                         required: true,
+                         minlength: 6
+                     },
+                     real_name: {
+                         required: true,
+                         minlength: 2,
+                     },
+                     email: {
+                         required: true,
+                         email: true
+                     }
+                 },
+                 messages: {
+                     username: {
+                         required: "请输入用户名",
+                         minlength: "用户名必需由两个字母组成"
+                     },
+                     password: {
+                         required: "请输入密码",
+                         minlength: "密码长度不能小于 6 个字母"
+                     },
+                     email: "请输入一个正确的邮箱",
+                 }
+             })
+         });
+     </script>--%>
     <style type="text/css">
         body {
             padding-bottom: 40px;
@@ -103,24 +103,32 @@
             <td class="tableleft">邮箱</td>
             <td><input type="text" name="email" required="required" placeholder="请输入邮箱" value=""/></td>
         </tr>
-        <tr>
-            <td class="tableleft">状态</td>
-            <td>
-                <input type="radio" id="r1" name="state" value="1"/> 启用
-                <input type="radio" id="r2" name="state" value="0" /> 禁用
-            </td>
-        </tr>
-        <tr>
-            <td class="tableleft">角色</td>
-            <td>
-                <select name="roleModel.id">
-                    <option value="">--请选择--
-                        <c:forEach var="role" items="${role}">
-                    <option value="${role.id}">${role.role_name}</option>
-                    </c:forEach>
-                </select>
-            </td>
-        </tr>
+        <c:if test="${user.is_admin==1}">
+            <tr>
+                <td class="tableleft">状态</td>
+                <td>
+                    <input type="radio" id="r1" name="state" value="1"/> 启用
+                    <input type="radio" id="r2" name="state" value="0" /> 禁用
+                </td>
+            </tr>
+            <tr>
+                <td class="tableleft">管理员</td>
+                <td>
+                    <input type="radio" name="is_admin" value="1" id="is1"/> 是  <input type="radio" name="is_admin" value="0" id="is2"/> 否
+                </td>
+            </tr>
+            <tr>
+                <td class="tableleft">角色</td>
+                <td>
+                    <select name="roleModel.id">
+                        <option value="">--请选择--
+                            <c:forEach var="role" items="${role}">
+                        <option value="${role.id}">${role.role_name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+        </c:if>
         <tr>
             <td class="tableleft"></td>
             <td>

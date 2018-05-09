@@ -1,6 +1,7 @@
 package com.zhiyou.mapper;
 
 import com.zhiyou.model.RoleModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,5 +20,5 @@ public interface RoleMapper {
     //添加角色到hosp_role表
     int saveRoleById(RoleModel roleModel);
     //根据角色id删除角色，Hosp_role表
-    int delRoleById(Integer id);
+    int delRoleById(@Param("id")Integer id);
 }

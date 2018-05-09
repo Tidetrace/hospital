@@ -2,7 +2,9 @@ package com.zhiyou.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.zhiyou.mapper.DoctorMapper;
 import com.zhiyou.mapper.OfficeMapper;
+import com.zhiyou.model.DoctorModel;
 import com.zhiyou.model.OfficeModel;
 import com.zhiyou.model.RegistinfoModel;
 import com.zhiyou.model.UserModel;
@@ -34,6 +36,8 @@ import java.util.Map;
 public class RegistrationController extends BaseConstant{
     @Autowired
     private RegistrationService registrationService;
+    @Autowired
+    private DoctorMapper doctorMapper;
     @Autowired
     private OfficeMapper officeMapper;
     /**
@@ -100,7 +104,13 @@ public class RegistrationController extends BaseConstant{
      * Derc: 跳转到添加病号信息页面
      */
     @RequestMapping(value = "addSkip",method = RequestMethod.GET)
-    public Object skip(){
+    public Object skip(Model model){
+        List<DoctorModel> doctors= doctorMapper.selectByParam(null);
+        List<OfficeModel> officeModels =officeMapper.selectOfficeByAll("");
+        if(doctors!=null||officeModels!=null){
+            model.addAttribute("doc",doctors);
+            model.addAttribute("off",officeModels);
+        }
         return "registration/add";
     }
 
@@ -135,6 +145,12 @@ public class RegistrationController extends BaseConstant{
     public Object regEdits(@RequestParam("regNum") String regNum,Model model){
         RegistinfoModel registinfoModel = registrationService.selectRegByParam(regNum);
         model.addAttribute("reg",registinfoModel);
+        List<DoctorModel> doctors= doctorMapper.selectByParam(null);
+        List<OfficeModel> officeModels =officeMapper.selectOfficeByAll("");
+        if(doctors!=null||officeModels!=null){
+            model.addAttribute("doc",doctors);
+            model.addAttribute("off",officeModels);
+        }
         return "/registration/edit";
     }
 

@@ -2,6 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhiyou.mapper.PrescribeMapper">
 
+    <resultMap id="onlinePills" type="OnlinePillsModel">
+        <id column="id" property="id"/>
+        <result column="pills_send" property="pills_send"/>
+        <result column="pills_num" property="pills_num"/>
+        <result column="creater" property="creater"/>
+        <result column="create_time" property="create_time"/>
+        <result column="updater" property="updater"/>
+        <result column="update_time" property="update_time"/>
+        <association property="registinfoModel" column="regist_num" select="com.zhiyou.mapper.RegistrationMapper.selectRegByParam"/>
+        <association property="drugModel" column="drug_num" select="com.zhiyou.mapper.MedicineMapper.selectDrugByParam"/>
+    </resultMap>
+
+    <select id="selectOnlinePaillAll" resultMap="onlinePills" parameterType="String">
+         select * from online_pills
+         <where>
+             <if test="_parameter!=null and _parameter!=''">
+                 regist_num = #{regNum}
+             </if>
+         </where>
+    </select>
+
     <!--查询发药表里面是否存在已经开药的记录了-->
    <select id="selectAllByParams" parameterType="HashMap" resultType="OnlinePillsModel">
        select * from online_pills
@@ -74,4 +95,5 @@
             <if test="update_time != null"> update_time=#{update_time} ,  </if>
         </trim>
     </update>
+
 </mapper>

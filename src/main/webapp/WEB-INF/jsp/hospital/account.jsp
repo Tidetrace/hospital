@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>住院结算</title>
+    <title>最终结算</title>
     <base href="${basePath}">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
@@ -92,7 +92,7 @@
                     </c:choose>
                 </td>
                 <td style="vertical-align:middle;">
-                    <a href="account-look.html">详细信息</a>&nbsp;&nbsp;&nbsp;
+                    <a href="/bill/billLookDetalis/${bill.registinfoModel.regist_num}.do">详细信息</a>&nbsp;&nbsp;&nbsp;
                     <a href="/bill/outHosp/${bill.registinfoModel.regist_num}.do" onclick="if(confirm('是否确定结算？')==false) return false;">结算</a>
                 </td>
             </tr>

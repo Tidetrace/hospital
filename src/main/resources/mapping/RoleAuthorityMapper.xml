@@ -6,10 +6,10 @@
         <collection property="authorityModel" ofType="AuthorityModel" select="com.zhiyou.mapper.AuthorityMapper.selectByAuthorityIdParam" column="authority_id"/>
     </resultMap>
 
-    <select id="selectByRoleAuthorityIdParam" resultMap="roleAuthorityMap" parameterType="java.lang.Integer">
+    <select id="selectByRoleAuthorityIdParam" resultType="RoleAuthorityModel" parameterType="java.lang.Integer">
         select * from hosp_role_authority
         <where>
-            <if test="_parameter!=null and _parameter!=''">
+            <if test="_parameter!=null">
                 role_id = #{id}
             </if>
         </where>
@@ -39,8 +39,8 @@
     <delete id="deleRoleAuthorityById" parameterType="Integer">
         delete from hosp_role_authority
         <where>
-            <if test="_parameter!=null and _parameter!=''">
-                 role_id =#{id}
+            <if test="_parameter!=null">
+                 role_id =${id}
             </if>
         </where>
     </delete>

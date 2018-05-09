@@ -1,4 +1,5 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: HYC
@@ -47,10 +48,6 @@
         <tr>
             <td width="10%" class="tableleft">药品编号</td>
             <td>${drug.drug_num}</td>
-        </tr>
-        <tr>
-            <td width="10%" class="tableleft">图片</td>
-            <td><img src="1.png"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">进价</td>

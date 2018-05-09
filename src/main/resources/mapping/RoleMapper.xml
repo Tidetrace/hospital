@@ -20,7 +20,7 @@
     <select id="selectByRoleIdParam" resultMap="roleMap" parameterType="java.lang.Integer">
         select * from hosp_role
         <where>
-            <if test="_parameter!=null and _parameter!=''">
+            <if test="_parameter!=null">
                 id = #{role_id}
             </if>
         </where>
@@ -73,8 +73,8 @@
     <delete id="delRoleById" parameterType="Integer">
         delete from hosp_role
         <where>
-            <if test="_parameter!=null and _parameter!=''">
-                id = #{id}
+            <if test="_parameter!=null">
+                id = ${id}
             </if>
         </where>
     </delete>

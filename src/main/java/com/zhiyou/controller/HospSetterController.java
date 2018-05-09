@@ -57,7 +57,6 @@ public class HospSetterController extends BaseConstant{
      */
     @RequestMapping(value = "outHosp/{regNum}",method = RequestMethod.GET)
     public Object outHosp(@PathVariable("regNum") String regNum){
-        System.out.println("进来了....."+regNum);
         Map map = new HashMap();
         int i = hospSetterService.updateSetterHospByRegNum(regNum);
         if(i>0) {
@@ -83,5 +82,19 @@ public class HospSetterController extends BaseConstant{
         }
         return null;
     }
+
+    /*
+     *@Derc:查看详情信息
+     */
+    @RequestMapping(value = "billLookDetalis/{regNum}",method = RequestMethod.POST)
+    public Object look(Model model,@PathVariable("regNum") String regNum){
+        InhostipalSettleModel bills=hospSetterService.selectBillByParam(regNum);
+        if(bills!=null) {
+            model.addAttribute("bill",bills);
+            return "/hospital/account-look";
+        }
+        return "error404";
+    }
+
 
 }

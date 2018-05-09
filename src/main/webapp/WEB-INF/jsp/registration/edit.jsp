@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: HYC
@@ -93,11 +94,10 @@
             <td width="10%" class="tableleft">所挂科室</td>
             <td>
                 <select name="officeModel.id">
-                    <option value="1">急诊科</option>
-                    <option value="2">骨科</option>
-                    <option value="3">血液科</option>
-                    <option value="4">神经科</option>
-                    <option value="5">口腔科</option>
+                    <option value="">请选择--</option>
+                    <c:forEach items="${off}" var="off">
+                        <option value="${off.id}">${off.office_name}</option>
+                    </c:forEach>
                 </select>
             </td>
         </tr>
@@ -105,12 +105,10 @@
             <td width="10%" class="tableleft">指定医生</td>
             <td>
                 <select name="doctorModel.id">
-                    <option value="1">程俊</option>
-                    <option value="2">欧阳雨露</option>
-                    <option value="3">王博</option>
-                    <option value="4">天天</option>
-                    <option value="5">张可</option>
-                    <option value="6">杨洋</option>
+                    <option value="">请选择--</option>
+                    <c:forEach items="${doc}" var="doc">
+                        <option value="${doc.id}">${doc.doctor_name}</option>
+                    </c:forEach>
                 </select>
             </td>
         </tr>

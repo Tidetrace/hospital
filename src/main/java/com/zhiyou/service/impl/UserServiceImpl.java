@@ -37,6 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUserIdById(UserModel userModel) {
+        System.out.println(">>>>>>>>>>>>>>>>service:"+userModel.getId());
         return userMapper.updateUserIdById(userModel);
     }
 

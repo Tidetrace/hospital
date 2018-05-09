@@ -105,7 +105,16 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">护理</td>
-            <td><input type="text" name="nurse" value=""/></td>
+            <td>
+                <select name="nurse">
+                    <option value="">请选择--</option>
+                    <option value="50">普通--</option>
+                    <option value="100">一级--</option>
+                    <option value="200">二级--</option>
+                    <option value="500">三级--</option>
+                    <option value="850">高级--</option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">床位号</td>

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author HYC
@@ -54,5 +55,10 @@ public class PrescribeServiceImpl implements PrescribeService {
         hashMap.put("update_time",update_time);
         hashMap.put("updater",updater);
         return prescribeMapper.updateOnlinePills(hashMap);
+    }
+
+    @Override
+    public List<OnlinePillsModel> selectOnlinePaillAll(String regNum) {
+        return prescribeMapper.selectOnlinePaillAll(regNum);
     }
 }

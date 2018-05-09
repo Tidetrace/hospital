@@ -1,7 +1,9 @@
 package com.zhiyou.mapper;
 
 import com.zhiyou.model.RoleAuthorityModel;
+import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,9 +14,9 @@ import java.util.Set;
  */
 public interface RoleAuthorityMapper {
     //角色权限
-    Set<RoleAuthorityModel> selectByRoleAuthorityIdParam(Integer id);
+    List<RoleAuthorityModel> selectByRoleAuthorityIdParam(@Param("id")Integer id);
     //添加角色权限信息，在角色添加成功后
     int saveRoleAuthorityById(Map map);
     //根据角色id删除角色权限表的数据
-    int deleRoleAuthorityById(Integer id);
+    int deleRoleAuthorityById(@Param("id")Integer id);
 }

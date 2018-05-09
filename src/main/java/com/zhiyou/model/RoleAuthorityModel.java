@@ -26,7 +26,7 @@ public class RoleAuthorityModel implements Serializable {
 	private RoleModel roleModel;
 	@ManyToOne
 	@JoinColumn(name="authority_id")
-	private Set<AuthorityModel> authorityModel;
+	private List<AuthorityModel> authorityModel;
 
 	//	get和set方法
 	public Integer getId() {
@@ -41,10 +41,10 @@ public class RoleAuthorityModel implements Serializable {
 	public void setRoleModel(RoleModel roleModel) {
 		this.roleModel = roleModel;
 	}
-	public Set<AuthorityModel> getAuthorityModel() {
+	public List<AuthorityModel> getAuthorityModel() {
 		return authorityModel;
 	}
-	public void setAuthorityModel(Set<AuthorityModel> authorityModel) {
+	public void setAuthorityModel(List<AuthorityModel> authorityModel) {
 		this.authorityModel = authorityModel;
 	}
 	@Override

@@ -3,6 +3,7 @@ package com.zhiyou.mapper;
 import com.zhiyou.model.OnlinePillsModel;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author HYC
@@ -16,4 +17,6 @@ public interface PrescribeMapper {
     OnlinePillsModel selectAllByParams(HashMap hashMap);
     //如果有药品信息，则更改对应的药品数量
     int updateOnlinePills(HashMap hashMap);
+    //查询所有信息
+    List<OnlinePillsModel> selectOnlinePaillAll(String regNum);
 }

@@ -100,7 +100,8 @@ public class UserController extends BaseConstant {
      */
     @RequestMapping(value = "userIndex",method = {RequestMethod.GET,RequestMethod.POST})
     public Object userIndex(@RequestParam(defaultValue = "")String username,
-                            @RequestParam(defaultValue = "1")Integer pageNum,Model model){
+                            @RequestParam(defaultValue = "1")Integer pageNum,Model model,
+                            HttpServletRequest request){
         PageHelper.startPage(pageNum,PAGESIZE);
         List<UserModel> userModels = userService.selectUserAll(username);
         PageInfo<UserModel> pages = new PageInfo<>(userModels);
@@ -294,11 +295,6 @@ public class UserController extends BaseConstant {
                 }
             });
         }
-
- /*       for (Object o:menus
-                ) {
-            System.out.println(o);
-        }*/
         //封装后的数据共享出去。。
         request.setAttribute("menus",menus);
         return menus;

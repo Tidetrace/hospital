@@ -99,22 +99,35 @@
     </thead>
 
     <c:choose>
-        <c:when test="${not empty use}">
-            <c:forEach var="use" items="${use}">
+        <c:when test="${user.is_admin==1}">
+            <c:if test="${not empty use}">
+                <c:forEach var="use" items="${use}">
+                    <tr>
+                        <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${use.id}"></td>
+                        <td>${use.username}</td>
+                        <td>${use.real_name}</td>
+                        <td>${use.roleModel.role_name}</td>
+                        <td>
+                            <a href="/user/editSkip/${use.id}.do" onclick="if(confirm('确定修改用户信息?')==false)return false;" >编辑</a>&nbsp;&nbsp;&nbsp;<a href="/user/delUser/${use.id}.do" onclick="if(confirm('确定删除?')==false)return false;" >删除</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </c:if>
+            <c:if test="${empty use}">
                 <tr>
-                    <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${use.id}"></td>
-                    <td>${use.username}</td>
-                    <td>${use.real_name}</td>
-                    <td>${use.roleModel.role_name}</td>
-                    <td>
-                        <a href="/user/editSkip/${use.id}.do" onclick="if(confirm('确定修改用户信息?')==false)return false;" >编辑</a>&nbsp;&nbsp;&nbsp;<a href="/user/delUser/${use.id}.do" onclick="if(confirm('确定删除?')==false)return false;" >删除</a>
-                    </td>
+                    <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
                 </tr>
-            </c:forEach>
+            </c:if>
         </c:when>
         <c:otherwise>
             <tr>
-                <td style="text-align:center;vertical-align:middle;font-size: 20px;" colspan="7">查询不到对应的数据,可能数据库没有这条记录...</td>
+                <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${user.id}"></td>
+                <td>${user.username}</td>
+                <td>${user.real_name}</td>
+                <td>${user.roleModel.role_name}</td>
+                <td>
+                    <a href="/user/editSkip/${user.id}.do" onclick="if(confirm('确定修改用户信息?')==false)return false;" >编辑</a>&nbsp;&nbsp;&nbsp;
+                </td>
             </tr>
         </c:otherwise>
     </c:choose>
@@ -133,10 +146,12 @@
                 </c:if>
                 &nbsp;&nbsp;&nbsp;共<span class='current'>${page.total}</span>条记录<span class='current'> ${page.pageNum}/${page.pages} </span>页
             </div>
-            <div>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Images/add_user.png" width="30px" height="30px" id="newNav">&nbsp;&nbsp;&nbsp;
-                <img src="Images/del_user.png" width="30px" height="30px" id="delPro" onClick="delAll()">&nbsp;&nbsp;&nbsp;
-            </div>
+            <c:if test="${user.is_admin==1}">
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Images/add_user.png" width="30px" height="30px" id="newNav">&nbsp;&nbsp;&nbsp;
+                    <img src="Images/del_user.png" width="30px" height="30px" id="delPro" onClick="delAll()">&nbsp;&nbsp;&nbsp;
+                </div>
+            </c:if>
         </th>
     </tr>
 </table>

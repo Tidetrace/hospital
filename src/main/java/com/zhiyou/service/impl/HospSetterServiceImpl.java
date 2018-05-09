@@ -75,4 +75,29 @@ public class HospSetterServiceImpl implements HospSetterService{
         }
         return null;
     }
+
+    @Override
+    public InhostipalSettleModel selectBillByParam(String regNum) {
+        return hospSetterMapper.selectOutHospByRegNum(regNum);
+    }
+
+    @Override
+    public int saveBillByParams(String regNum, double drugSum, double inHospSum, double cash,double inho_total_case) {
+        HashMap hashMap =new HashMap();
+        hashMap.put("regNum",regNum);
+        hashMap.put("drugSum",drugSum);
+        hashMap.put("inHospSum",inHospSum);
+        hashMap.put("cash",cash);
+        hashMap.put("inho_total_case",inho_total_case);
+        return hospSetterMapper.saveBillByParams(hashMap);
+    }
+
+    @Override
+    public int updateBillByParams(String regNum, double drugSum, double inho_total_case) {
+        HashMap hashMap =new HashMap();
+        hashMap.put("regNum",regNum);
+        hashMap.put("drugSum",drugSum);
+        hashMap.put("inho_total_case",inho_total_case);
+        return hospSetterMapper.updateBillByParams(hashMap);
+    }
 }

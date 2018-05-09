@@ -3,6 +3,7 @@ package com.zhiyou.service;
 import com.zhiyou.model.OnlinePillsModel;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author HYC
@@ -16,4 +17,6 @@ public interface PrescribeService {
     OnlinePillsModel selectAllByParams(String regNum, String drugNum);
     //如果有药品信息，则更改对应的药品数量
     int updateOnlinePills(String regNum,String drugNum, Integer pills_num, Integer pills_send, Timestamp update_time, String updater);
+    //查询所有信息
+    List<OnlinePillsModel> selectOnlinePaillAll(String regNum);
 }

@@ -20,7 +20,7 @@ public class UserModel implements Serializable {
 	private Timestamp create_time;
 	private String updater;
 	private Timestamp update_time;
-	private RoleModel roleModel;
+	private RoleModel roleModel=new RoleModel();
 	/*提供对应的get和set方法*/
 	public Integer getId() {
 		return id;

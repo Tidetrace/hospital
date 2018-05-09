@@ -35,11 +35,62 @@
 
     <!--查询最终结算信息-->
     <select id="selectHospSettleByParam" parameterType="String" resultMap="outHospMap">
-      select * from hosp_inhostipal_settle
-      <where>
-          <if test="_parameter!=null and _parameter!=''">
-              regist_num = #{regNum}
-          </if>
-      </where>
+        select * from hosp_inhostipal_settle
+        <where>
+            <if test="_parameter!=null and _parameter!=''">
+                regist_num = #{regNum}
+            </if>
+        </where>
     </select>
+
+    <!--把信息添加到结算信息界面-->
+    <insert id="saveBillByParams" parameterType="HashMap">
+        insert into hosp_inhostipal_settle
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="regNum != null" >
+                regist_num,
+            </if>
+            <if test="drugSum != null" >
+                inho_drug_pay,
+            </if>
+            <if test="inHospSum != null" >
+                inho_medical_pay,
+            </if>
+            <if test="cash != null" >
+                inho_cash,
+            </if>
+            <if test="inho_total_case!=null" >
+                inho_total_case,
+            </if>
+            inho_finall_status,
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="regNum != null" >
+                #{regNum},
+            </if>
+            <if test="drugSum != null" >
+                ${drugSum},
+            </if>
+            <if test="inHospSum != null" >
+                ${inHospSum},
+            </if>
+            <if test="cash != null" >
+                ${cash},
+            </if>
+            <if test="inho_total_case!=null" >
+                ${inho_total_case},
+            </if>
+            1,
+        </trim>
+    </insert>
+
+    <update id="updateBillByParams" parameterType="HashMap">
+        update hosp_inhostipal_settle
+        <trim prefix="set" suffixOverrides="," suffix=" where regist_num = #{regNum} ">
+
+            <if test="drugSum != null"> inho_drug_pay=${drugSum} ,  </if>
+
+            <if test="inho_total_case != null"> inho_total_case=${inho_total_case} ,  </if>
+        </trim>
+    </update>
 </mapper>

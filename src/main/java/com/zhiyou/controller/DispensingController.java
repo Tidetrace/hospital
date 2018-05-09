@@ -65,12 +65,12 @@ public class DispensingController extends BaseConstant{
     public Object pillsDetails(@RequestParam(defaultValue = "")String regNum,
                                @RequestParam(defaultValue = "1") Integer pageNum,
                                Model model){
-        PageHelper.startPage(pageNum,PAGESIZE);
+        //PageHelper.startPage(pageNum,PAGESIZE);
         List<OnlinePillsModel> onlinePillsModels = dispensingService.selectPillsByParam(regNum.trim());
         PageInfo<OnlinePillsModel> pages = new PageInfo<>(onlinePillsModels);
         if(onlinePillsModels!=null || pages!=null){
             model.addAttribute("pills",onlinePillsModels);
-            model.addAttribute("page",pages);
+            //model.addAttribute("page",pages);
             return "/hospital/dispensing-look";
         }
         return "error404";

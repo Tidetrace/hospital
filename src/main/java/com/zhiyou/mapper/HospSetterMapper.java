@@ -18,4 +18,8 @@ public interface HospSetterMapper {
     int updateSetterHospByRegNum(String regNum);
     //查询最终的结算信息
     List<InhostipalSettleModel> selectHospSettleByParam(String regNum);
+    //在医生发药的时候，把结算信息添加到数据库中
+    int saveBillByParams(HashMap hashMap);
+    //查看是否存在该信息,如果存在则进行修改
+    int updateBillByParams(HashMap hashMap);
 }

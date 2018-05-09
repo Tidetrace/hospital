@@ -18,4 +18,10 @@ public interface HospSetterService {
     List<InhostipalSettleModel> selectHospSettleByParam(String regNum);
 
     InputStream getInputStream();
+    //根据编号查询
+    InhostipalSettleModel selectBillByParam(String regNum);
+    //添加主要信息，在医生发药的时候
+    int saveBillByParams(String regNum, double drugSum, double inHospSum, double cash,double inho_total_case);
+    //查看是否存在该信息
+    int updateBillByParams(String regNum, double drugSum,double inho_total_case);
 }

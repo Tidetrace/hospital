@@ -35,15 +35,11 @@
 </head>
 <body>
 <form action="" id="user_form" method="post" class="definewidth m20">
-    <input type="hidden" name="id" value="${use.id}" />
+    <input type="hidden" name="id" id="id" value="${use.id}" />
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
             <td width="10%" class="tableleft">登录名</td>
             <td><input type="text" name="username" value="${use.username}" readonly></td>
-        </tr>
-        <tr>
-            <td class="tableleft">密码</td>
-            <td><input type="password" name="password" value="${use.password}"/></td>
         </tr>
         <tr>
             <td class="tableleft">真实姓名</td>
@@ -53,24 +49,32 @@
             <td class="tableleft">邮箱</td>
             <td><input type="text" name="email" value="${use.email}"/></td>
         </tr>
-        <tr>
-            <td class="tableleft">状态</td>
-            <td>
-                <input type="radio" id="r1" name="state" value="1"/> 启用
-                <input type="radio" id="r2" name="state" value="0" /> 禁用
-            </td>
-        </tr>
-        <tr>
-            <td class="tableleft">角色</td>
-            <td>
-                <select name="roleModel.id">
-                    <option value="">--请选择--
-                        <c:forEach var="role" items="${role}">
-                    <option value="${role.id}">${role.role_name}</option>
-                    </c:forEach>
-                </select>
-            </td>
-        </tr>
+        <c:if test="${user.is_admin==1}">
+            <tr>
+                <td class="tableleft">状态</td>
+                <td>
+                    <input type="radio" id="r1" name="state" value="1"/> 启用
+                    <input type="radio" id="r2" name="state" value="0" /> 禁用
+                </td>
+            </tr>
+            <tr>
+                <td class="tableleft">管理员</td>
+                <td>
+                    <input type="radio" name="is_admin" value="1" id="is1"/> 是  <input type="radio" name="is_admin" value="0" id="is2"/> 否
+                </td>
+            </tr>
+            <tr>
+                <td class="tableleft">角色</td>
+                <td>
+                    <select name="roleModel.id">
+                        <option value="">--请选择--
+                            <c:forEach var="role" items="${role}">
+                        <option value="${role.id}">${role.role_name}</option>
+                        </c:forEach>
+                    </select>
+                </td>
+            </tr>
+        </c:if>
         <tr>
             <td class="tableleft"></td>
             <td>
@@ -108,6 +112,11 @@
             $("#r1").attr("checked","checked");
         }else {
             $("#r2").attr("checked","checked");
+        }
+        if (${use.is_admin==1}) {
+            $("#is1").attr("checked","checked");
+        }else {
+            $("#is2").attr("checked","checked");
         }
     });
 </script>
