@@ -387,7 +387,7 @@ INSERT INTO `hosp_user` VALUES ('14', '韩', '83832391027a1f2f4d46ef882ff3a47d',
 INSERT INTO `hosp_user` VALUES ('17', '丫丫', '4409eae53c2e26a65cfc24b3a2359eb9', '0', '1', 'yaya@qq.com', '呀呀a', '1', '丫丫', '2018-04-16 15:43:51', '丫丫', '2018-05-09 11:12:52');
 INSERT INTO `hosp_user` VALUES ('18', '哈哈', 'haha', '0', '0', 'haha@yeah.net', '不知道', '2', '哈哈', '2018-04-16 15:46:11', null, null);
 INSERT INTO `hosp_user` VALUES ('19', '舞蹈服', '123', '0', '1', '232@qq', '但是', '2', '舞蹈服', '2018-04-24 11:20:06', null, null);
-INSERT INTO `hosp_user` VALUES ('20', '韩燕超', '123456', '1', '0', 'hy@qq,com', '韩燕超', '3', '韩燕超', '2018-04-24 11:27:34', '韩燕超', '2018-04-24 11:29:02');
+INSERT INTO `hosp_user` VALUES ('20', 'my', '123456', '1', '0', 'hy@qq,com', 'my', '3', 'my', '2018-04-24 11:27:34', 'my', '2018-04-24 11:29:02');
 INSERT INTO `hosp_user` VALUES ('34', 'sdf', '23423423', '0', '1', 'sdf@qq.com', 'dsfsd', '6', 'sdf', '2018-04-24 14:22:19', 'sdf', '2018-04-24 14:22:33');
 INSERT INTO `hosp_user` VALUES ('70', 'admin', '4124bc0a9335c27f086f24ba207a4912', '0', '1', '', '', '2', 'admin', '2018-04-24 16:31:19', 'admin', '2018-04-24 16:36:14');
 INSERT INTO `hosp_user` VALUES ('72', 'yyy', 'f0a4058fd33489695d53df156b77c724', '0', '1', 'hhy@qq.com', '哈哈哈', '15', 'yyy', '2018-05-07 14:19:40', null, null);
