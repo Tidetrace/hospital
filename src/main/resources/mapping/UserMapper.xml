@@ -55,7 +55,7 @@
 
             <if test="state != null"> state=#{state} ,  </if>
 
-            <if test="roleModel.id != null and roleModel.id.length()>0"> role_id=#{roleModel.id} ,  </if>
+            <if test="roleModel.id != null"> role_id=#{roleModel.id} ,  </if>
 
             <if test="updater != null and updater.length()>0"> updater=#{updater} ,  </if>
 

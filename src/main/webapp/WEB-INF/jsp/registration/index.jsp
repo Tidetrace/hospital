@@ -94,13 +94,13 @@
 <form action="/reg/regIndex.do" method="post" class="definewidth m20">
     <table class="table table-bordered table-hover definewidth m10">
         <tr>
-            <td width="10%" class="tableleft">病历号：</td>
+            <td width="10%" class="tableleft">门诊</br>编号</td>
             <td><input type="text" name="regist_num" value=""/></td>
 
-            <td width="10%" class="tableleft">主治医生：</td>
+            <td width="10%" class="tableleft">主治</br>医生</td>
             <td><input type="text" name="doctorModel.doctor_name" value=""/></td>
 
-            <td width="10%" class="tableleft">科室：</td>
+            <td width="10%" class="tableleft">科室</td>
             <td>
                 <select name="officeModel.office_name">
                     <option value="">请选择--</option>

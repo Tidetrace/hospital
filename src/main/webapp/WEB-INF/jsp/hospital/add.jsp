@@ -52,48 +52,20 @@
             <td>${inhosp.regist_name}</td>
         </tr>
         <tr>
-            <td width="10%" class="tableleft">证件类型</td>
-            <td>
-                <c:choose>
-                    <c:when test="${inhosp.regist_papers_type==0}">
-                        护照
-                    </c:when>
-                    <c:when test="${inhosp.regist_papers_type==1}">
-                        身份证
-                    </c:when>
-                    <c:otherwise>
-                        港澳通行证
-                    </c:otherwise>
-                </c:choose>
-            </td>
-        </tr>
-        <tr>
-            <td width="10%" class="tableleft">证件号</td>
-            <td>${inhosp.regist_papers_num}</td>
-        </tr>
-        <tr>
-            <td width="10%" class="tableleft">社保号</td>
-            <td>${inhosp.regist_social_num}</td>
-        </tr>
-        <tr>
             <td width="10%" class="tableleft">联系电话</td>
             <td>${inhosp.phone}</td>
         </tr>
         <tr>
-            <td width="10%" class="tableleft">是否自费</td>
-            <td><input type="radio" name="self_paying" value="0" checked/>否&nbsp;&nbsp;&nbsp;<input type="radio" name="self_paying" value="1"/>是</td>
-        </tr>
-        <tr>
             <td width="10%" class="tableleft">性别</td>
-            <td><input type="radio" name="sex" value="1" checked/>男&nbsp;&nbsp;&nbsp;<input type="radio" name="sex" value="0"/>女</td>
+            <td>
+                <c:choose>
+                    <c:when test="${inhosp.sex==1}">男</c:when>
+                    <c:otherwise>女</c:otherwise>
+                </c:choose>
         </tr>
         <tr>
             <td width="10%" class="tableleft">年龄</td>
             <td>${inhosp.age}</td>
-        </tr>
-        <tr>
-            <td width="10%" class="tableleft">初复诊</td>
-            <td><input type="radio" name="early_appointment" value="0" checked/>初诊&nbsp;&nbsp;&nbsp;<input type="radio" name="early_appointment" value="1"/>复诊</td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">所挂科室</td>
@@ -108,11 +80,11 @@
             <td>
                 <select name="nurse">
                     <option value="">请选择--</option>
-                    <option value="50">普通--</option>
-                    <option value="100">一级--</option>
-                    <option value="200">二级--</option>
-                    <option value="500">三级--</option>
-                    <option value="850">高级--</option>
+                    <option value="50">普通</option>
+                    <option value="100">一级</option>
+                    <option value="200">二级</option>
+                    <option value="500">三级</option>
+                    <option value="850">高级</option>
                 </select>
             </td>
         </tr>

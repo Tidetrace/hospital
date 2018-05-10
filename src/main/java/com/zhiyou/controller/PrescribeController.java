@@ -99,6 +99,7 @@ public class PrescribeController extends BaseConstant {
                             double prices=0;//每种药品的价格
                             double drugSum=0;//所有药品的价格
                             double inHospSum=0;//住院价格
+                            double hospcase = 0;
                             if(pillsInfos!=null){
                                 for (OnlinePillsModel opm:pillsInfos) {
                                     System.out.println(opm.getPills_send());
@@ -111,14 +112,15 @@ public class PrescribeController extends BaseConstant {
                                 }
                                 System.out.println(">>>>>>>>>>>>>"+drugSum+":"+inHospSum);
                                 InhospitalMessageModel inhospitalMessageModel = hospMessageService.selectInhospByMessageParams(regNum);
-                                System.out.println(inhospitalMessageModel.getNurse());
+                                //System.out.println(inhospitalMessageModel.getNurse());
                                 if(inhospitalMessageModel!=null){
                                     inHospSum+=Double.valueOf(inhospitalMessageModel.getNurse());
+                                    hospcase+=inhospitalMessageModel.getCash();
                                 }
 
                                 InhostipalSettleModel ihs = hospSetterService.selectBillByParam(regNum);
                                 if(ihs==null) {//判断结算表是否存在该人的信息
-                                    t = hospSetterService.saveBillByParams(regNum, drugSum, inHospSum, inhospitalMessageModel.getCash(), (inHospSum + drugSum));
+                                    t = hospSetterService.saveBillByParams(regNum, drugSum, inHospSum, hospcase, (inHospSum + drugSum));
                                 }else {
                                     t = hospSetterService.updateBillByParams(regNum, (ihs.getInho_drug_pay()+drugSum),((ihs.getInho_drug_pay()+drugSum)+ihs.getInho_total_case()));
                                 }

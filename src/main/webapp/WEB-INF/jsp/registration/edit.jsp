@@ -46,7 +46,7 @@
         <input type="hidden" name="regist_num" value="${reg.regist_num}">
         <tr>
             <td width="10%" class="tableleft">姓名</td>
-            <td><input type="text" name="regist_name" readonly value="${reg.regist_name}"/></td>
+            <td><input type="text" name="regist_name" placeholder="请输入姓名" readonly value="${reg.regist_name}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">证件类型</td>
@@ -60,19 +60,19 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">证件号</td>
-            <td><input type="text" name="regist_papers_num" value="${reg.regist_papers_num}"/></td>
+            <td><input type="text" name="regist_papers_num" placeholder="请输入证件号" value="${reg.regist_papers_num}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">挂号费</td>
-            <td><input type="text" name="fee_money" value="${reg.fee_money}"/>元</td>
+            <td><input type="text" name="fee_money" placeholder="请输入挂号费" value="${reg.fee_money}"/>元</td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">社保号</td>
-            <td><input type="text" name="regist_social_num" value="${reg.regist_social_num}"/></td>
+            <td><input type="text" name="regist_social_num" placeholder="请输入社保号" value="${reg.regist_social_num}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">联系电话</td>
-            <td><input type="text" name="phone" value="${reg.phone}"/></td>
+            <td><input type="text" name="phone" placeholder="请输入联系电话" value="${reg.phone}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">是否自费</td>
@@ -84,7 +84,7 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">职业</td>
-            <td><input type="text" name="job" value="${reg.job}"/></td>
+            <td><input type="text" name="job" placeholder="请输入职业" value="${reg.job}"/></td>
         </tr>
         <tr>
             <td width="10%" class="tableleft">初复诊</td>
@@ -114,7 +114,7 @@
         </tr>
         <tr>
             <td width="10%" class="tableleft">备注</td>
-            <td><textarea name="remark">${reg.remark}</textarea></td>
+            <td><textarea name="remark" placeholder="需要备注下吗...">${reg.remark}</textarea></td>
         </tr>
         <tr>
             <td colspan="2">
