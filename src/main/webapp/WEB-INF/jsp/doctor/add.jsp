@@ -11,6 +11,7 @@
 <head>
     <title>添加医生</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="docstyle.jsp"/>
     <jsp:include page="docscript.jsp"/>
     <link href="http://g.alicdn.com/bui/bui/1.1.21/css/bs3/dpl.css" rel="stylesheet">

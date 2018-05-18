@@ -11,6 +11,7 @@
 <head>
     <title>用户管理</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
 
@@ -102,13 +103,21 @@
         <c:when test="${user.is_admin==1}">
             <c:if test="${not empty use}">
                 <c:forEach var="use" items="${use}">
-                    <tr>
+                    <tr class="atr">
                         <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${use.id}"></td>
                         <td>${use.username}</td>
                         <td>${use.real_name}</td>
-                        <td>${use.roleModel.role_name}</td>
+                        <td class="atd">${use.roleModel.role_name}</td>
                         <td>
-                            <a href="/user/editSkip/${use.id}.do" onclick="if(confirm('确定修改用户信息?')==false)return false;" >编辑</a>&nbsp;&nbsp;&nbsp;<a href="/user/delUser/${use.id}.do" onclick="if(confirm('确定删除?')==false)return false;" >删除</a>
+                            <a href="/user/editSkip/${use.id}.do" onclick="if(confirm('确定修改用户信息?')==false)return false;" >编辑</a>&nbsp;&nbsp;&nbsp;
+                            <c:choose>
+                                <c:when test="${use.id==user.id}">
+                                    <a href="/user/delUser/${use.id}.do" onclick="if(confirm('注销用户？您将不能再使用！')==false)return false;" >注销</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="/user/delUser/${use.id}.do" onclick="if(confirm('确定删除?')==false)return false;" >删除</a>
+                                </c:otherwise>
+                            </c:choose>
                         </td>
                     </tr>
                 </c:forEach>
@@ -120,11 +129,11 @@
             </c:if>
         </c:when>
         <c:otherwise>
-            <tr>
+            <tr class="atr">
                 <td style="vertical-align:middle;"><input type="checkbox" name="check" value="${user.id}"></td>
                 <td>${user.username}</td>
                 <td>${user.real_name}</td>
-                <td>${user.roleModel.role_name}</td>
+                <td class="atd">${user.roleModel.role_name}</td>
                 <td>
                     <a href="/user/editSkip/${user.id}.do" onclick="if(confirm('确定修改用户信息?')==false)return false;" >编辑</a>&nbsp;&nbsp;&nbsp;
                 </td>
@@ -155,5 +164,7 @@
         </th>
     </tr>
 </table>
+<script>
+</script>
 </body>
 </html>

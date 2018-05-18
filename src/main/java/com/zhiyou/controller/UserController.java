@@ -70,8 +70,8 @@ public class UserController extends BaseConstant {
         String vercode = (String) request.getSession().getAttribute("verCode");
         Map map = new HashMap();
         //首先判断验证码是否有误
-//        if (verify.toLowerCase().equals(vercode.toLowerCase())) {
-        if (true) {
+        if (verify.toLowerCase().equals(vercode.toLowerCase())) {
+            //if (true) {
             //判断输入的账号或者密码是否为空
             if (userModel.getUsername() != null && userModel.getPassword() != null) {//成功跳转主页面，失败返回登陆页面
                 UserModel user = userService.selectByNP(userModel);

@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>这个.. 页面没有找到!!!</title>
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <style type="text/css">
         body{ margin:0; padding:0; background:#efefef; font-family:Georgia, Times, Verdana, Geneva, Arial, Helvetica, sans-serif; }
         div#mother{ margin:0 auto; width:943px; height:572px; position:relative; }

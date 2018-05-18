@@ -12,6 +12,7 @@
 <head>
     <title>查看</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
     <style type="text/css">

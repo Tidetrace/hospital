@@ -9,8 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>xx市第二人民医院信息管理系统</title>
+    <title>蓝天医院信息管理系统</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <jsp:include page="lead/stylecss.jsp"/>
 </head>

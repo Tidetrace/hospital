@@ -11,6 +11,7 @@
 <head>
     <title>修改药品信息</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
     <link href="http://g.alicdn.com/bui/bui/1.1.21/css/bs3/dpl.css" rel="stylesheet">

@@ -11,6 +11,7 @@
 <head>
     <title>发药详情</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
 
@@ -126,11 +127,13 @@
 <script>
     function sendPillOne(parm) {
         $.post('pills/savePillsByParam.do',{regNum:parm.regNum,drugNum:parm.drugNum,pillsSend:parm.pillsSend},function (result) {
-            if(result.message){
-                window.location.href="pills/pillsIndex.do";
-            }else {
+           // if(result.message){
+                /*window.location.href="pills/pillsIndex.do";*/
+                //alert(result.error)
+          //  }else {
                 alert(result.error);
-            }
+                window.location.reload();
+           // }
         },'json')
     }
 </script>

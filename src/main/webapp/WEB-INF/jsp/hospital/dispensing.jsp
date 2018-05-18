@@ -11,6 +11,7 @@
 <head>
     <title>在线发药</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="/WEB-INF/jsp/lead/docscript.jsp"/>
     <jsp:include page="/WEB-INF/jsp/lead/docstyle.jsp"/>
     <style type="text/css">
@@ -35,7 +36,8 @@
     <script type="text/javascript">
         $(function () {
             $('#newNav').click(function(){
-                window.location.href="dispensing-gives.html";
+                alert("在线发药")
+                window.location.href="";
             });
         });
     </script>
@@ -75,7 +77,7 @@
                     <td style="vertical-align:middle;">${pills.registinfoModel.regist_num}</td>
                     <td style="vertical-align:middle;">${pills.registinfoModel.regist_name}</td>
                     <td style="vertical-align:middle;">${pills.creater}</td>
-                    <td style="vertical-align:middle;"><a href="/pills/blisterSkip.do?regNum=${pills.registinfoModel.regist_num}">发药</a>&nbsp;&nbsp;&nbsp;<a href="/pills/pillsDetails.do?regNum=${pills.registinfoModel.regist_num}">详情...</a></td>
+                    <td style="vertical-align:middle;"><%--<a href="/pills/blisterSkip.do?regNum=${pills.registinfoModel.regist_num}">发药</a>--%>&nbsp;&nbsp;&nbsp;<a href="/pills/pillsDetails.do?regNum=${pills.registinfoModel.regist_num}">详情...</a></td>
                 </tr>
             </c:forEach>
         </c:when>

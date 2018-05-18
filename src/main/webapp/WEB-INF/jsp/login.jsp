@@ -8,8 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>登录</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
+    <title>登录</title>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -63,8 +64,8 @@
         <input type="text" name="verify" class="input-medium" placeholder="验证码">
         <td nowrap width="437"></td>
         <td>
-            <img id="img" src="${ctx}/authImage" />
-            <a href='#' onclick="javascript:changeImg()" style="color:white;"><label style="color:white;">看不清？</label></a>
+            <img id="img" src="${ctx}/authImage" style="margin-top: -13px"/>
+            <a href='#' onclick="javascript:changeImg()" style="color:white;float: right"><label style="color:blue;">看不清？</label></a>
         </td>
         <p>
 

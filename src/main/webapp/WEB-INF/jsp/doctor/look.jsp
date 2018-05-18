@@ -12,6 +12,7 @@
 <head>
     <title>查看---2018</title>
     <base href="${basePath}">
+    <link rel="shortcut icon" href="Images/logo.png.png">
     <jsp:include page="docstyle.jsp"/>
     <jsp:include page="docscript.jsp"/>
 
