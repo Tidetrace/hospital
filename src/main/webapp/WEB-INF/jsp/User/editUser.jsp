@@ -47,6 +47,10 @@
             <td><input type="text" name="real_name" value="${use.real_name}"/></td>
         </tr>
         <tr>
+            <td class="tableleft">密码</td>
+            <td><input type="password" name="password" placeholder="请输入密码" value=""/></td>
+        </tr>
+        <tr>
             <td class="tableleft">邮箱</td>
             <td><input type="text" name="email" value="${use.email}"/></td>
         </tr>

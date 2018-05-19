@@ -134,8 +134,6 @@
 
             <div>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="Images/adds.png" width="30px" height="30px" id="newNav">&nbsp;&nbsp;&nbsp;
-                <img src="Images/del.png" width="30px" height="30px" id="delPro" onClick="delAll()">&nbsp;&nbsp;&nbsp;
-
             </div>
         </th>
     </tr>

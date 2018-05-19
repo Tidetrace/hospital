@@ -139,11 +139,16 @@ public class UserController extends BaseConstant {
 
     @ResponseBody
     @RequestMapping(value = "editUserss",method = RequestMethod.POST)
-    public Object editUsers(UserModel userModel){
+    public Object editUsers(UserModel userModel,HttpServletRequest request){
         Map map =new HashMap();
-        userModel.setPassword(MD5Utils.str2MD5(userModel.getPassword()));
-        userModel.setUpdater(userModel.getUsername());
-        userModel.setUpdate_time(new Timestamp(new Date().getTime()));
+        if(userModel.getPassword()!=null&&userModel.getPassword()!="") {
+            userModel.setPassword(MD5Utils.str2MD5(userModel.getPassword()));
+        }
+        UserModel user = (UserModel)request.getSession().getAttribute("user");
+        if(user!=null){
+            userModel.setUpdater(user.getUsername());
+            userModel.setUpdate_time(new Timestamp(new Date().getTime()));
+        }
         int i = userService.updateUserIdById(userModel);
         if(i>0){
             map.put(MESSAGE,true);

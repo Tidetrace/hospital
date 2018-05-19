@@ -6,6 +6,7 @@ import com.zhiyou.model.InhospitalMessageModel;
 import com.zhiyou.model.RegistinfoModel;
 import com.zhiyou.model.UserModel;
 import com.zhiyou.service.HospMessageService;
+import com.zhiyou.service.HospSetterService;
 import com.zhiyou.service.RegistrationService;
 import com.zhiyou.util.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
@@ -110,11 +113,16 @@ public class HospMessageController extends BaseConstant{
     * Derc: 出院
     */
     @RequestMapping(value = "outHosp",method = RequestMethod.GET)
-    public Object outHosp(@RequestParam String regNum){
-        Map map = new HashMap();
-        int i = hospMessageService.updateSetterHospByRegNum(regNum);
-        if(i>0) {
-            return "redirect:/inhosp/inhospIndex.do";
+    public Object outHosp(@RequestParam String regNum, HttpServletResponse response) throws Exception{
+        InhospitalMessageModel inhospitalMessageModel = hospMessageService.selectInhospByMessageParams(regNum);
+        if(inhospitalMessageModel!=null&&inhospitalMessageModel.getState()==0) {
+            int i = hospMessageService.updateSetterHospByRegNum(regNum);
+            if(i>0) {
+                return "redirect:/inhosp/inhospIndex.do";
+            }
+        }else{
+            PrintWriter out = response.getWriter();
+            out.print("请先结算，再退院！");
         }
         return "error404";
     }
@@ -124,7 +132,6 @@ public class HospMessageController extends BaseConstant{
      */
     @RequestMapping(value = "settleHosp",method = RequestMethod.GET)
     public Object settleHosp(@RequestParam String regNum){
-        Map map = new HashMap();
         int i = hospMessageService.updateSetterCloseHospByRegNum(regNum);
         if(i>0) {
             return "redirect:/inhosp/inhospIndex.do";

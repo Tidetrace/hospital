@@ -59,9 +59,9 @@
 
     <form class="form-signin" id="loginForm" onsubmit="return false;" method="post" action="">
         <h2 class="form-signin-heading">&nbsp;&nbsp;&nbsp;登录系统</h2>
-        <input type="text" name="username" class="input-block-level" placeholder="账号">
-        <input type="password" name="password" class="input-block-level" placeholder="密码">
-        <input type="text" name="verify" class="input-medium" placeholder="验证码">
+        <input type="text" id="username" name="username" class="input-block-level" placeholder="账号" class="required" >
+        <input type="password" name="password" class="input-block-level" placeholder="密码" class="required" >
+        <input type="text" name="verify" class="input-medium" placeholder="验证码" class="required" >
         <td nowrap width="437"></td>
         <td>
             <img id="img" src="${ctx}/authImage" style="margin-top: -13px"/>
@@ -102,27 +102,6 @@
         var img = document.getElementById("img");
         img.src = "${ctx}/authImage?date=" + new Date();
     }
-</script>
-<script>
-    $(function(){
-        //让当前表单调用validate方法，实现表单验证功能
-        $("#loginForm").validate({
-            debug:true, //调试模式，即使验证成功也不会跳转到目标页面
-            rules:{     //配置验证规则，key就是被验证的dom对象，value就是调用验证的方法(也是json格式)
-                userName:{
-                    required:true,  //必填。如果验证方法不需要参数，则配置为true
-                    rangelength:[6,12]
-                },
-                password:{
-                    required:true,
-                    rangelength:[6,12]
-                },
-                verify:{
-                    required:true,
-                }
-            }
-        });
-    });
 </script>
 </body>
 </html>
